@@ -14,4 +14,5 @@ public:
     bool getIsGround() const;
     void setVoltage(double vol);
     void setAsGround();
+    void setAsGround(bool ground);
 };

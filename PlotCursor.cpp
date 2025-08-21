@@ -271,7 +271,7 @@ bool CursorManager::handleKeyPress(SDL_Scancode key) {
             if (active_cursor_index >= 0 && active_cursor_index < static_cast<int>(cursors.size())) {
                 moveCursorByDataPoint(1);
             }
-            return true;
+             return true;
             
         default:
             return false;

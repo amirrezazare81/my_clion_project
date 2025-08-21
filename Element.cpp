@@ -7,6 +7,7 @@
 #include <limits>
 #include <utility>
 #include <sstream>
+#include <iomanip>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -110,12 +111,14 @@ void Capacitor::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeI
         if (n1 != -1) J[n1] += i_history;
         if (n2 != -1) J[n2] -= i_history;
         
-        // Debug logging for capacitor behavior
+        // Enhanced debug logging for RC behavior analysis
         static int log_count = 0;
-        if (log_count < 5) { // Log only first few steps
-            std::cout << "[CAP " << name << "] timestep=" << timestep << ", C=" << capacitance 
-                      << ", G=" << conductance << ", V_prev=(" << v1_prev << "," << v2_prev 
-                      << "), I_hist=" << i_history << std::endl;
+        if (log_count < 10) { // Log first 10 steps to see RC transient
+            double v_cap_prev = v1_prev - v2_prev;
+            std::cout << "[CAP " << name << "] dt=" << std::fixed << std::setprecision(6) << timestep 
+                      << "s, C=" << capacitance << "F, G_eq=" << conductance << "S"
+                      << ", V_cap_prev=" << v_cap_prev << "V, I_history=" << i_history << "A"
+                      << " (RC=" << (capacitance * 1000.0) << "ms time const)" << std::endl;
             log_count++;
         }
     }
@@ -215,32 +218,50 @@ std::string PulseVoltageSource::getAddCommandString() const {
 }
 
 double PulseVoltageSource::getVoltageAtTime(double current_time) const {
-    if (current_time < td_val) {
+    // Handle edge case: no period defined
+    if (per_val <= 0) {
         return v1_val;
     }
     
-    double t_cycle = fmod(current_time - td_val, per_val);
+    // Calculate time within the current period (like PulseCurrentSource)
+    double t_period = fmod(current_time, per_val);
     double voltage;
     
-    if (t_cycle < tr_val) {
-        // Rising edge
-        voltage = v1_val + (v2_val - v1_val) * (t_cycle / tr_val);
-    } else if (t_cycle < tr_val + pw_val) {
-        // High level
+    if (t_period < td_val) {
+        // Before delay time - initial value
+        voltage = v1_val;
+    } else if (t_period < td_val + tr_val) {
+        // Rise time - linear interpolation from v1 to v2
+        if (tr_val > 0) {
+            double t_rise = (t_period - td_val) / tr_val;
+            voltage = v1_val + (v2_val - v1_val) * t_rise;
+        } else {
+            voltage = v2_val; // Instantaneous rise
+        }
+    } else if (t_period < td_val + tr_val + pw_val) {
+        // Pulse width - constant at v2 (high level)
         voltage = v2_val;
-    } else if (t_cycle < tr_val + pw_val + tf_val) {
-        // Falling edge
-        double t_fall = t_cycle - tr_val - pw_val;
-        voltage = v2_val + (v1_val - v2_val) * (t_fall / tf_val);
+    } else if (t_period < td_val + tr_val + pw_val + tf_val) {
+        // Fall time - linear interpolation from v2 to v1
+        if (tf_val > 0) {
+            double t_fall = (t_period - td_val - tr_val - pw_val) / tf_val;
+            voltage = v2_val + (v1_val - v2_val) * t_fall;
+        } else {
+            voltage = v1_val; // Instantaneous fall
+        }
     } else {
-        // Low level
+        // After pulse - back to initial value (low level)
         voltage = v1_val;
     }
     
-    // Debug output every 100 time steps to avoid spam
+    // Enhanced debug output with better formatting
     static int debug_counter = 0;
-    if (debug_counter % 100 == 0) {
-        std::cout << "[PULSE] t=" << current_time << "s, t_cycle=" << t_cycle << "s, V=" << voltage << "V (V1=" << v1_val << ", V2=" << v2_val << ", td=" << td_val << ", per=" << per_val << ")" << std::endl;
+    if (debug_counter % 1000 == 0) { // Reduced frequency for cleaner output
+        std::cout << "[PULSE " << name << "] t=" << std::fixed << std::setprecision(6) << current_time 
+                  << "s, t_period=" << t_period << "s, V_source=" << voltage 
+                  << "V (V1=" << v1_val << ", V2=" << v2_val 
+                  << ", td=" << td_val << ", tr=" << tr_val << ", tf=" << tf_val 
+                  << ", pw=" << pw_val << ", per=" << per_val << ")" << std::endl;
     }
     debug_counter++;
     
@@ -254,6 +275,7 @@ double PulseVoltageSource::getTr() const { return tr_val; }
 double PulseVoltageSource::getTf() const { return tf_val; }
 double PulseVoltageSource::getPw() const { return pw_val; }
 double PulseVoltageSource::getPer() const { return per_val; }
+double PulseVoltageSource::getCurrentVoltageValue() const { return current_voltage_value; }
 
 void PulseVoltageSource::setV2(double new_v2) { v2_val = new_v2; }
 void PulseVoltageSource::setTd(double new_td) { td_val = new_td; }
@@ -262,7 +284,7 @@ void PulseVoltageSource::setTf(double new_tf) { tf_val = new_tf; }
 void PulseVoltageSource::setPw(double new_pw) { pw_val = new_pw; }
 void PulseVoltageSource::setPer(double new_per) { per_val = new_per; }
 
-void PulseVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) {
+void PulseVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool is_transient, double currentTime) {
     // For time-dependent voltage sources, we need to add a current variable to the MNA matrix
     // This is handled in MNAMatrix::build by adding extra rows/columns
     int n1 = node_map.count(node1_id) ? node_map.at(node1_id) : -1;
@@ -270,36 +292,59 @@ void PulseVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, co
     
     if (n1 != -1 && n2 != -1) {
         // The voltage difference constraint will be handled in MNAMatrix::build
+        // Store the current voltage value for transient analysis
+        if (is_transient) {
+            current_voltage_value = getVoltageAtTime(currentTime);
+        } else {
+            current_voltage_value = v1_val; // DC value
+        }
     }
 }
 
 // --- Sinusoidal Voltage Source Implementation ---
-SinusoidalVoltageSource::SinusoidalVoltageSource() : Element(), dc_offset(0.0), amplitude(0.0), frequency(0.0) {}
+SinusoidalVoltageSource::SinusoidalVoltageSource() : Element(), v_offset(0.0), v_amplitude(1.0), frequency(1000.0) {}
 
-SinusoidalVoltageSource::SinusoidalVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, double offset, double amp, double freq)
-    : Element(name, node1, node2), dc_offset(offset), amplitude(amp), frequency(freq) {}
+SinusoidalVoltageSource::SinusoidalVoltageSource(const std::string& name, const std::string& node1, const std::string& node2,
+                                                double offset, double amplitude, double freq)
+    : Element(name, node1, node2), v_offset(offset), v_amplitude(amplitude), frequency(freq) {}
 
-std::string SinusoidalVoltageSource::getType() const { return "SinusoidalVoltageSource"; }
-double SinusoidalVoltageSource::getValue() const { return dc_offset; }
-void SinusoidalVoltageSource::setValue(double value) { dc_offset = value; }
-void SinusoidalVoltageSource::setDCOffset(double new_offset) { dc_offset = new_offset; }
 std::string SinusoidalVoltageSource::getAddCommandString() const {
-    return "Vsin " + name + " " + node1_id + " " + node2_id + " " + std::to_string(dc_offset) + " " + std::to_string(amplitude) + " " + std::to_string(frequency);
+    return "VSIN " + name + " " + node1_id + " " + node2_id + " " + 
+           std::to_string(v_offset) + " " + std::to_string(v_amplitude) + " " + std::to_string(frequency);
 }
 
-double SinusoidalVoltageSource::getVoltageAtTime(double current_time) const {
-    if (frequency <= 0) return dc_offset;
-    return dc_offset + amplitude * std::sin(2.0 * M_PI * frequency * current_time);
+double SinusoidalVoltageSource::getVoltageAtTime(double time) const {
+    double voltage = v_offset + v_amplitude * sin(2.0 * M_PI * frequency * time);
+    
+    // Debug output for first few calls
+    static int debug_count = 0;
+    if (debug_count < 20) {
+        double period = 1.0 / frequency;
+        double phase = 2.0 * M_PI * frequency * time;
+        std::cout << "[SIN VOLTAGE] " << name << " at t=" << std::fixed << std::setprecision(6) << time 
+                  << "s: V=" << std::fixed << std::setprecision(3) << voltage 
+                  << "V (offset=" << v_offset << "V, amp=" << v_amplitude << "V, freq=" << frequency 
+                  << "Hz, period=" << period << "s, phase=" << phase << " rad)" << std::endl;
+        debug_count++;
+    }
+    
+    return voltage;
 }
 
-void SinusoidalVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) {
+void SinusoidalVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool is_transient, double currentTime) {
     // For time-dependent voltage sources, we need to add a current variable to the MNA matrix
     // This is handled in MNAMatrix::build by adding extra rows/columns
     int n1 = node_map.count(node1_id) ? node_map.at(node1_id) : -1;
     int n2 = node_map.count(node2_id) ? node_map.at(node2_id) : -1;
 
     if (n1 != -1 && n2 != -1) {
-        // The voltage difference constraint will be handled in MNAMatrix::build
+        // For transient analysis, calculate the voltage at current time
+        if (is_transient) {
+            double voltage = getVoltageAtTime(currentTime);
+            // Store the current voltage for the solver to use
+            // The actual voltage constraint will be handled in MNAMatrix::build
+            std::cout << "[SIN MNA] " << name << " at t=" << currentTime << "s: V=" << voltage << "V (offset=" << v_offset << "V, amp=" << v_amplitude << "V, freq=" << frequency << "Hz)" << std::endl;
+        }
     }
 }
 
@@ -678,7 +723,7 @@ void Diode::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndex
 Ground::Ground() : Element() {}
 
 Ground::Ground(const std::string& name, const std::string& node_id)
-    : Element(name, node_id, "0") {}
+    : Element(name, node_id, "") {}  // Ground has only one node, no node2
 
 std::string Ground::getType() const { return "Ground"; }
 double Ground::getValue() const { return 0.0; }
@@ -687,9 +732,10 @@ std::string Ground::getAddCommandString() const {
     return "GND " + name + " " + node1_id;
 }
 
-void Ground::contributeToMNA(Matrix&, Vector&, int, const NodeIndexMap&, const std::map<std::string, double>&, bool, double) {
+void Ground::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) {
     // Ground nodes are handled specially in the MNA matrix building process
-    // They are assigned to row/column 0 and their voltage is fixed at 0V
+    // The ground node voltage is fixed at 0V by the circuit's ground handling
+    // No direct contribution needed here as it's handled at the circuit level
 }
 
 // --- Subcircuit Implementation ---

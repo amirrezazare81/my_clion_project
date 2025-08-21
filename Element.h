@@ -1,4 +1,10 @@
 #pragma once
+
+// Workaround for Windows byte type conflict with std::byte
+#ifdef _WIN32
+#define byte windows_byte
+#endif
+
 #include <string>
 #include <vector>
 #include <map>
@@ -10,6 +16,14 @@
 #include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/types/map.hpp>
+
+#ifdef _WIN32
+#undef byte
+#endif
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 // --- Type Aliases ---
 using Matrix = std::vector<std::vector<double>>;
@@ -165,6 +179,7 @@ public:
 class PulseVoltageSource : public Element {
 private:
     double v1_val, v2_val, td_val, tr_val, tf_val, pw_val, per_val;
+    mutable double current_voltage_value = 0.0; // Store current voltage for MNA
     friend class cereal::access;
     PulseVoltageSource(); // Default constructor for Cereal
 public:
@@ -188,32 +203,50 @@ public:
     double getTf() const;
     double getPw() const;
     double getPer() const;
+    double getCurrentVoltageValue() const;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
     template<class Archive>
     void serialize(Archive& archive) {
         archive(cereal::base_class<Element>(this), CEREAL_NVP(v1_val), CEREAL_NVP(v2_val), CEREAL_NVP(td_val), CEREAL_NVP(tr_val), CEREAL_NVP(tf_val), CEREAL_NVP(pw_val), CEREAL_NVP(per_val));
+        // Note: current_voltage_value is transient and doesn't need to be serialized
     }
 };
 
 class SinusoidalVoltageSource : public Element {
 private:
-    double dc_offset;
-    double amplitude;
+    double v_offset;
+    double v_amplitude;
     double frequency;
     friend class cereal::access;
     SinusoidalVoltageSource(); // Default constructor for Cereal
+
 public:
-    SinusoidalVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, double offset, double amp, double freq);
-    std::string getType() const override;
-    double getValue() const override;
-    void setValue(double value) override;
-    void setDCOffset(double new_offset);
+    SinusoidalVoltageSource(const std::string& name, const std::string& n1, const std::string& n2,
+                            double offset, double amplitude, double freq);
+
+    std::string getType() const override { return "SinusoidalVoltageSource"; }
+    // For AC analysis, getValue() should return the amplitude of the sine wave.
+    double getValue() const override { return v_amplitude; }
+    void setValue(double value) override { v_amplitude = value; }
     std::string getAddCommandString() const override;
-    double getVoltageAtTime(double current_time) const;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
+
+    // The critical function for transient analysis
+    double getVoltageAtTime(double time) const;
+
+    // Setter methods for parameter editing
+    void setDCOffset(double offset) { v_offset = offset; }
+    void setAmplitude(double amplitude) { v_amplitude = amplitude; }
+    void setFrequency(double freq) { frequency = freq; }
+
+    // Getter methods for parameter editing
+    double getDCOffset() const { return v_offset; }
+    double getAmplitude() const { return v_amplitude; }
+    double getFrequency() const { return frequency; }
+
     template<class Archive>
     void serialize(Archive& archive) {
-        archive(cereal::base_class<Element>(this), CEREAL_NVP(dc_offset), CEREAL_NVP(amplitude), CEREAL_NVP(frequency));
+        archive(cereal::base_class<Element>(this), CEREAL_NVP(v_offset), CEREAL_NVP(v_amplitude), CEREAL_NVP(frequency));
     }
 };
 

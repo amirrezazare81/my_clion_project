@@ -29,5 +29,20 @@ static void em_write(const std::string& level, const std::string& message) {
     } catch (...) {}
 }
 
+void ErrorManager::clearLogFile() {
+    try {
+        if (em_log_path.empty()) {
+            char* base = SDL_GetBasePath();
+            if (base) { em_log_path = std::string(base) + "circuit_log.txt"; SDL_free(base); }
+            else { em_log_path = "circuit_log.txt"; }
+        }
+        // Open file in truncate mode to clear it
+        std::ofstream ofs(em_log_path, std::ios::trunc);
+        if (ofs.is_open()) {
+            ofs.close();
+        }
+    } catch (...) {}
+}
+
 void ErrorManager::info(const std::string& message) { em_write("INFO", message); }
 void ErrorManager::warn(const std::string& message) { em_write("WARN", message); }

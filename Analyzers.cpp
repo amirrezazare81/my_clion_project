@@ -23,18 +23,21 @@ void TransientAnalysis::analyze(Circuit& circuit, MNAMatrix& mna_matrix, const L
     time_points.clear();
     plot_vars.clear();
 
+    std::cout << "[TransientAnalysis] Starting analysis with UIC=" << (use_uic ? "true" : "false")
+              << ", Tstep=" << Tstep << ", Tstop=" << Tstop << std::endl;
+
     NodeIndexMap node_map;
     std::vector<Node*> non_ground_nodes;
     circuit.getNonGroundNodes(non_ground_nodes, node_map);
 
     std::map<std::string, int> vs_map, l_map;
     int vs_counter = 0, l_counter = 0;
-    for (const auto& elem : circuit.getElements()) {
-        const std::string& type = elem->getType();
+    for (const auto& elem_ptr : circuit.getElements()) {
+        const std::string& type = elem_ptr->getType();
         if (type == "IndependentVoltageSource" || type == "PulseVoltageSource" || type == "WaveformVoltageSource" || type == "PhaseVoltageSource" || type == "SinusoidalVoltageSource" || type == "ACVoltageSource" || type == "VoltageControlledVoltageSource" || type == "CurrentControlledVoltageSource") {
-            vs_map[elem->getName()] = vs_counter++;
+            vs_map[elem_ptr->getName()] = vs_counter++;
         } else if (type == "Inductor") {
-            l_map[elem->getName()] = l_counter++;
+            l_map[elem_ptr->getName()] = l_counter++;
         }
     }
     initializeResults(circuit, node_map, vs_map, l_map);
@@ -42,14 +45,16 @@ void TransientAnalysis::analyze(Circuit& circuit, MNAMatrix& mna_matrix, const L
     Vector x_current;
 
     if (use_uic) {
+        std::cout << "UIC specified: Skipping DC operating point analysis. Starting from zero." << std::endl;
         x_current.assign(node_map.size() + vs_map.size() + l_map.size(), 0.0);
         std::map<std::string, double> zero_voltages;
         for(const auto& pair : node_map) zero_voltages[pair.first] = 0.0;
         if(circuit.checkGroundNodeExists()) zero_voltages[circuit.getGroundNodeId()] = 0.0;
         circuit.updatePreviousNodeVoltages(zero_voltages);
         circuit.updatePreviousInductorCurrents({});
-        ErrorManager::info("[TRAN] Using UIC: Zero initial conditions");
     } else {
+        std::cout << "Performing DC operating point analysis for initial conditions..." << std::endl;
+
         std::map<std::string, double> initial_guess;
         for (const auto& pair : node_map) initial_guess[pair.first] = 0.0;
         if (circuit.checkGroundNodeExists()) initial_guess[circuit.getGroundNodeId()] = 0.0;
@@ -68,9 +73,7 @@ void TransientAnalysis::analyze(Circuit& circuit, MNAMatrix& mna_matrix, const L
                 double max_delta = 0.0;
                 std::map<std::string, double> new_voltages;
                 for (const auto& pair : node_map) {
-                    double old_v = 0.0;
-                    auto it_prev = circuit.previous_node_voltages.find(pair.first);
-                    if (it_prev != circuit.previous_node_voltages.end()) old_v = it_prev->second;
+                    double old_v = circuit.previous_node_voltages.at(pair.first);
                     double new_v = x_current[pair.second];
                     max_delta = std::max(max_delta, std::abs(new_v - old_v));
                     new_voltages[pair.first] = new_v;
@@ -80,87 +83,63 @@ void TransientAnalysis::analyze(Circuit& circuit, MNAMatrix& mna_matrix, const L
 
                 if (max_delta < dc_tolerance) {
                     converged = true;
+                    std::cout << "DC operating point converged after " << i + 1 << " iterations." << std::endl;
                     break;
                 }
-            } catch (const std::exception& e) {
-                 ErrorManager::displayError("DC operating point analysis failed: " + std::string(e.what()) + ". Proceeding with zero initial conditions.");
-                 break; // fall back to zeros
+            } catch (const std::runtime_error& e) {
+                 ErrorManager::displayError("DC operating point analysis failed during iteration " + std::to_string(i+1) + ": " + std::string(e.what()));
+                 return;
             }
         }
+
         if (!converged) {
-            ErrorManager::displayError("DC operating point did not converge. Proceeding with zero initial conditions.");
+            ErrorManager::displayError("DC operating point did not converge after " + std::to_string(max_dc_iterations) + " iterations.");
+            return;
         }
     }
 
-    for (double t = 0; t <= Tstop + Tstep/2.0 + 1e-12; t += Tstep) {
+    // Now that the initial state (either from DC OP or UIC) is set, start the transient simulation
+    int step_count = 0;
+    for (double t = 0; t <= Tstop + Tstep/2.0; t += Tstep) {
         try {
-            if (t > 0) {
-                mna_matrix.build(circuit, true, t, Tstep);
-                x_current = solver.solve(mna_matrix.getA(), mna_matrix.getRHS());
-                
-                // Debug: Log first few time points
-                static int debug_count = 0;
-                if (debug_count < 5) {
-                    std::stringstream debug_ss;
-                    debug_ss << "[TRAN] t=" << t << ", solution=[";
-                    for (size_t i = 0; i < std::min(size_t(5), x_current.size()); ++i) {
-                        debug_ss << x_current[i] << " ";
-                    }
-                    debug_ss << "]";
-                    ErrorManager::info(debug_ss.str());
-                    debug_count++;
-                }
-            }
+            // Build MNA matrix and solve for ALL time steps, including t=0
+            mna_matrix.build(circuit, true, t, Tstep);
+            x_current = solver.solve(mna_matrix.getA(), mna_matrix.getRHS());
+
             time_points.push_back(t);
             extractResults(x_current, circuit, node_map, vs_map, l_map);
+
+            step_count++;
+            if (step_count <= 5 || step_count % 1000 == 0) {
+                std::cout << "[TransientAnalysis] Step " << step_count << " at t=" << std::fixed << std::setprecision(6) << t << "s" << std::endl;
+                if (!x_current.empty()) {
+                    std::cout << "[TransientAnalysis]   Solution size: " << x_current.size() << std::endl;
+                    for (size_t i = 0; i < std::min(size_t(3), x_current.size()); ++i) {
+                        std::cout << "[TransientAnalysis]   x[" << i << "] = " << std::fixed << std::setprecision(6) << x_current[i] << std::endl;
+                    }
+                }
+            }
         } catch (const std::runtime_error& e) {
             ErrorManager::displayError("Solver failed at t=" + std::to_string(t) + "s: " + e.what());
             break;
         }
     }
+    std::cout << "Transient analysis completed." << std::endl;
 
-    // Safety: if nothing was produced, generate a minimal time axis and zeros so UI can render
-    if (time_points.empty()) {
-        time_points.push_back(0.0);
-        for (auto& kv : results) {
-            kv.second.push_back(0.0);
-        }
-    }
-    
-    // Log analysis completion time and summary
-    auto analysis_end = std::chrono::high_resolution_clock::now();
-    auto analysis_duration = std::chrono::duration_cast<std::chrono::milliseconds>(analysis_end - analysis_start);
-    
-    std::stringstream summary;
-    summary << "[TRAN] Analysis complete: " << time_points.size() << " time points, " 
-            << results.size() << " variables, " << analysis_duration.count() << "ms";
-    ErrorManager::info(summary.str());
-    
-    // Log signal ranges for debugging
-    for (const auto& pair : results) {
-        if (!pair.second.empty()) {
-            double min_val = *std::min_element(pair.second.begin(), pair.second.end());
-            double max_val = *std::max_element(pair.second.begin(), pair.second.end());
-            std::stringstream range_info;
-            range_info << "[TRAN] " << pair.first << ": [" << min_val << ", " << max_val << "] (" << pair.second.size() << " points)";
-            ErrorManager::info(range_info.str());
-        }
-    }
+
 }
 
 void TransientAnalysis::initializeResults(const Circuit& circuit, const NodeIndexMap& node_map, const std::map<std::string, int>& vs_map, const std::map<std::string, int>& l_map) {
     plot_vars.push_back("Time");
     std::vector<std::string> voltage_vars, current_vars;
 
-    // Include ALL circuit nodes so the Probe shows accurate labels
-    for (const auto& node_pair : circuit.getNodes()) {
-        voltage_vars.push_back("V(" + node_pair.first + ")");
-    }
+    for (const auto& pair : node_map) voltage_vars.push_back("V(" + pair.first + ")");
+    if (circuit.checkGroundNodeExists()) voltage_vars.push_back("V(" + circuit.getGroundNodeId() + ")");
 
     for (const auto& pair : vs_map) current_vars.push_back("I(" + pair.first + ")");
     for (const auto& pair : l_map) current_vars.push_back("I(" + pair.first + ")");
-    for (const auto& elem : circuit.getElements()) {
-        if (elem->getType() == "Resistor") current_vars.push_back("I(" + elem->getName() + ")");
+    for (const auto& elem_ptr : circuit.getElements()) {
+        if (elem_ptr->getType() == "Resistor") current_vars.push_back("I(" + elem_ptr->getName() + ")");
     }
 
     sort(voltage_vars.begin(), voltage_vars.end());
@@ -173,192 +152,74 @@ void TransientAnalysis::initializeResults(const Circuit& circuit, const NodeInde
 void TransientAnalysis::extractResults(const Vector& x, Circuit& circuit, const NodeIndexMap& node_map, const std::map<std::string, int>& vs_map, const std::map<std::string, int>& l_map) {
     int v_nodes = circuit.getNumNonGroundNodes();
 
-    // Log current time point for this extraction (limit logging to first 50 points to avoid overwhelming)
-    static int log_point_count = 0;
-    bool should_log = (log_point_count < 50) || (log_point_count % 50 == 0); // Log first 50, then every 50th
-    
-    double current_time = time_points.empty() ? 0.0 : time_points.back();
-    if (should_log) {
-        std::stringstream time_log;
-        time_log << "\n[TRAN] t=" << std::fixed << std::setprecision(6) << current_time << "s (point " << log_point_count + 1 << "):";
-        ErrorManager::info(time_log.str());
-    }
-    log_point_count++;
-
     std::map<std::string, double> current_voltages;
-    
-    // First, add all circuit nodes to the voltage map
-    for (const auto& pair : circuit.getNodes()) {
-        if (pair.second->getIsGround()) {
-            current_voltages[pair.first] = 0.0;
-        } else {
-            if (node_map.count(pair.first)) {
-                int idx = node_map.at(pair.first);
-                if (idx >= 0 && idx < (int)x.size()) {
-                    current_voltages[pair.first] = x[idx];
-                } else {
-                    current_voltages[pair.first] = 0.0;
-                    ErrorManager::warn("[TRAN] Node " + pair.first + " index " + std::to_string(idx) + " out of range [0," + std::to_string((int)x.size()-1) + "]");
-                }
-            } else {
-                current_voltages[pair.first] = 0.0;
-                ErrorManager::warn("[TRAN] Node " + pair.first + " not found in node_map");
-            }
-        }
-    }
-    
-    // Ensure ground node "0" is explicitly included
-    if (circuit.checkGroundNodeExists()) {
-        current_voltages["0"] = 0.0;
-        std::string ground_id = circuit.getGroundNodeId();
-        if (ground_id != "0") {
-            current_voltages[ground_id] = 0.0;
-        }
-    }
+    for (const auto& pair : node_map) current_voltages[pair.first] = x[pair.second];
+    if (circuit.checkGroundNodeExists()) current_voltages[circuit.getGroundNodeId()] = 0.0;
 
     std::map<std::string, double> current_inductor_currents;
     for (const auto& pair : l_map) current_inductor_currents[pair.first] = x[v_nodes + vs_map.size() + pair.second];
 
-    // Log all node voltages (only when should_log is true)
-    if (should_log) {
-        std::stringstream voltage_log;
-        voltage_log << "  Voltages: ";
-        for (const auto& pair : current_voltages) {
-            voltage_log << "V(" << pair.first << ")=" << std::fixed << std::setprecision(4) << pair.second << "V ";
-        }
-        ErrorManager::info(voltage_log.str());
-    }
-    
-    // Always store results regardless of logging
-    for (const auto& pair : current_voltages) {
-        std::string key = "V(" + pair.first + ")";
-        // Ensure key exists to avoid out_of_range
-        if (!results.count(key)) results[key] = {};
-        results[key].push_back(pair.second);
-    }
+    // First, populate the results table for plotting with the current solution
+    for(const auto& pair : node_map) results.at("V(" + pair.first + ")").push_back(x[pair.second]);
+    if(circuit.checkGroundNodeExists()) results.at("V(" + circuit.getGroundNodeId() + ")").push_back(0.0);
 
-    // Log and store voltage source currents (from MNA solution vector)
-    if (should_log && !vs_map.empty()) {
-        std::stringstream vs_current_log;
-        vs_current_log << "  Voltage Source Currents: ";
-        for (const auto& pair : vs_map) {
-            int vs_idx = v_nodes + pair.second;
-            if (vs_idx >= 0 && vs_idx < (int)x.size()) {
-                double current = x[vs_idx];
-                vs_current_log << "I(" << pair.first << ")=" << std::fixed << std::setprecision(6) << current << "A ";
-            }
-        }
-        ErrorManager::info(vs_current_log.str());
-    }
-    
-    // Always store results
-    for (const auto& pair : vs_map) {
-        int vs_idx = v_nodes + pair.second;
-        if (vs_idx >= 0 && vs_idx < (int)x.size()) {
-            double current = x[vs_idx];
-            std::string key = "I(" + pair.first + ")";
-            if (results.count(key)) {
-                results[key].push_back(current);
-            }
-        }
-    }
-    
-    // Log and store inductor currents (from MNA solution vector)
-    if (should_log && !l_map.empty()) {
-        std::stringstream l_current_log;
-        l_current_log << "  Inductor Currents: ";
-        for (const auto& pair : l_map) {
-            int l_idx = v_nodes + vs_map.size() + pair.second;
-            if (l_idx >= 0 && l_idx < (int)x.size()) {
-                double current = x[l_idx];
-                l_current_log << "I(" << pair.first << ")=" << std::fixed << std::setprecision(6) << current << "A ";
-            }
-        }
-        ErrorManager::info(l_current_log.str());
-    }
-    
-    // Always store results
-    for (const auto& pair : l_map) {
-        int l_idx = v_nodes + vs_map.size() + pair.second;
-        if (l_idx >= 0 && l_idx < (int)x.size()) {
-            double current = x[l_idx];
-            std::string key = "I(" + pair.first + ")";
-            if (results.count(key)) {
-                results[key].push_back(current);
-            }
+    for (const auto& pair : vs_map) results.at("I(" + pair.first + ")").push_back(x[v_nodes + pair.second]);
+    for (const auto& pair : l_map) results.at("I(" + pair.first + ")").push_back(x[v_nodes + vs_map.size() + pair.second]);
+
+    for (const auto& elem_ptr : circuit.getElements()) {
+        if (elem_ptr->getType() == "Resistor") {
+            double v1 = current_voltages.at(elem_ptr->getNode1Id());
+            double v2 = current_voltages.at(elem_ptr->getNode2Id());
+            results.at("I(" + elem_ptr->getName() + ")").push_back((v1 - v2) / elem_ptr->getValue());
         }
     }
 
-    // Log and store resistor currents (calculated from voltage difference)
-    bool has_resistors = false;
-    std::stringstream r_current_log;
-    if (should_log) r_current_log << "  Resistor Currents: ";
-    
-    for (const auto& elem : circuit.getElements()) {
-        if (elem->getType() == "Resistor") {
-            has_resistors = true;
-            std::string node1 = elem->getNode1Id();
-            std::string node2 = elem->getNode2Id();
-            std::string current_key = "I(" + elem->getName() + ")";
-            
-            if (current_voltages.count(node1) && current_voltages.count(node2) && results.count(current_key)) {
-                double v1 = current_voltages[node1];
-                double v2 = current_voltages[node2];
-                double resistance = elem->getValue();
-                if (resistance != 0.0) {
-                    double current = (v1 - v2) / resistance;
-                    if (should_log) r_current_log << "I(" << elem->getName() << ")=" << std::fixed << std::setprecision(6) << current << "A ";
-                    results[current_key].push_back(current);
-                } else {
-                    if (should_log) r_current_log << "I(" << elem->getName() << ")=0A(∞Ω) ";
-                    results[current_key].push_back(0.0);
-                    ErrorManager::warn("[TRAN] Zero resistance in " + elem->getName());
-                }
-            }
-        }
-    }
-    if (should_log && has_resistors) ErrorManager::info(r_current_log.str());
-
-    // Log capacitor currents (calculated as C * dV/dt)
-    bool has_capacitors = false;
-    std::stringstream c_current_log;
-    if (should_log) c_current_log << "  Capacitor Currents: ";
-    double timestep = time_points.size() >= 2 ? (time_points.back() - time_points[time_points.size()-2]) : 0.0;
-    
-    for (const auto& elem : circuit.getElements()) {
-        if (elem->getType() == "Capacitor" && timestep > 0) {
-            has_capacitors = true;
-            std::string node1 = elem->getNode1Id();
-            std::string node2 = elem->getNode2Id();
-            
-            if (current_voltages.count(node1) && current_voltages.count(node2)) {
-                double v1 = current_voltages[node1];
-                double v2 = current_voltages[node2];
-                double v_current = v1 - v2;
-                
-                // Get previous voltage across capacitor
-                double v_prev = 0.0;
-                auto prev_voltages = circuit.previous_node_voltages;
-                if (prev_voltages.count(node1) && prev_voltages.count(node2)) {
-                    v_prev = prev_voltages[node1] - prev_voltages[node2];
-                }
-                
-                // Calculate current: I = C * dV/dt
-                double capacitance = elem->getValue();
-                double current = capacitance * (v_current - v_prev) / timestep;
-                if (should_log) c_current_log << "I(" << elem->getName() << ")=" << std::fixed << std::setprecision(6) << current << "A ";
-            }
-        }
-    }
-    if (should_log && has_capacitors) ErrorManager::info(c_current_log.str());
-
+    // Finally, update the circuit's internal state for the *next* iteration
     circuit.updatePreviousNodeVoltages(current_voltages);
     circuit.updatePreviousInductorCurrents(current_inductor_currents);
 }
 
-void TransientAnalysis::displayResults() const {}
-const std::map<std::string, std::vector<double>>& TransientAnalysis::getResults() const { return results; }
-const std::vector<double>& TransientAnalysis::getTimePoints() const { return time_points; }
+void TransientAnalysis::displayResults() const {
+    if (time_points.empty()) { std::cout << "No transient results to display." << std::endl; return; }
+
+    const int COL_WIDTH = 14;
+
+    for (const auto& var : plot_vars) {
+        std::cout << std::left << std::setw(COL_WIDTH) << var;
+    }
+    std::cout << std::endl;
+    std::cout << std::string(COL_WIDTH * plot_vars.size(), '-') << std::endl;
+
+    for (size_t i = 0; i < time_points.size(); ++i) {
+        std::cout << std::fixed << std::setprecision(4) << std::left << std::setw(COL_WIDTH) << time_points[i];
+        for (size_t j = 1; j < plot_vars.size(); ++j) {
+            const std::string& var = plot_vars[j];
+            if (results.count(var) && i < results.at(var).size()) {
+                std::cout << std::left << std::setw(COL_WIDTH) << results.at(var)[i];
+            } else {
+                std::cout << std::left << std::setw(COL_WIDTH) << "N/A";
+            }
+        }
+        std::cout << std::endl;
+    }
+}
+const std::map<std::string, std::vector<double>>& TransientAnalysis::getResults() const {
+    std::cout << "[TransientAnalysis] getResults() called, returning " << results.size() << " signal(s)" << std::endl;
+    for (const auto& pair : results) {
+        std::cout << "[TransientAnalysis]   " << pair.first << ": " << pair.second.size() << " points" << std::endl;
+        if (!pair.second.empty()) {
+            std::cout << "[TransientAnalysis]     First value: " << pair.second[0] << std::endl;
+        }
+    }
+    return results;
+}
+const std::vector<double>& TransientAnalysis::getTimePoints() const {
+    std::cout << "[TransientAnalysis] getTimePoints() called, returning " << time_points.size() << " points" << std::endl;
+    if (!time_points.empty()) {
+        std::cout << "[TransientAnalysis]   Time range: " << time_points[0] << " to " << time_points.back() << "s" << std::endl;
+    }
+    return time_points;
+}
 
 // --- DCSweepAnalysis Implementation ---
 DCSweepAnalysis::DCSweepAnalysis(const std::string& src, double start, double end, double inc)
@@ -378,12 +239,12 @@ void DCSweepAnalysis::analyze(Circuit& circuit, MNAMatrix& mna_matrix, const Lin
     
     std::map<std::string, int> vs_map, l_map;
     int vs_counter = 0, l_counter = 0;
-    for (const auto& elem : circuit.getElements()) {
-        const std::string& type = elem->getType();
+    for (const auto& elem_ptr : circuit.getElements()) {
+        const std::string& type = elem_ptr->getType();
         if (type == "IndependentVoltageSource" || type == "PulseVoltageSource" || type == "WaveformVoltageSource" || type == "PhaseVoltageSource" || type == "SinusoidalVoltageSource" || type == "ACVoltageSource" || type == "VoltageControlledVoltageSource" || type == "CurrentControlledVoltageSource") {
-            vs_map[elem->getName()] = vs_counter++;
+            vs_map[elem_ptr->getName()] = vs_counter++;
         } else if (type == "Inductor") {
-            l_map[elem->getName()] = l_counter++;
+            l_map[elem_ptr->getName()] = l_counter++;
         }
     }
     
@@ -391,9 +252,9 @@ void DCSweepAnalysis::analyze(Circuit& circuit, MNAMatrix& mna_matrix, const Lin
     
     // Find the source to sweep
     Element* sweep_source = nullptr;
-    for (const auto& elem : circuit.getElements()) {
-        if (elem->getName() == source_name) {
-            sweep_source = elem.get();
+    for (const auto& elem_ptr : circuit.getElements()) {
+        if (elem_ptr->getName() == source_name) {
+            sweep_source = elem_ptr.get();
             break;
         }
     }
@@ -478,11 +339,11 @@ void DCSweepAnalysis::extractResults(const Vector& x, const Circuit& circuit, co
         results.at("I(" + pair.first + ")").push_back(x[v_nodes + vs_map.size() + pair.second]);
     }
 
-    for (const auto& elem : circuit.getElements()) {
-        if (elem->getType() == "Resistor") {
-            double v1 = x[node_map.at(elem->getNode1Id())];
-            double v2 = x[node_map.at(elem->getNode2Id())];
-            results.at("I(" + elem->getName() + ")").push_back((v1 - v2) / elem->getValue());
+    for (const auto& elem_ptr : circuit.getElements()) {
+        if (elem_ptr->getType() == "Resistor") {
+            double v1 = x[node_map.at(elem_ptr->getNode1Id())];
+            double v2 = x[node_map.at(elem_ptr->getNode2Id())];
+            results.at("I(" + elem_ptr->getName() + ")").push_back((v1 - v2) / elem_ptr->getValue());
         }
     }
 }
@@ -496,8 +357,8 @@ void DCSweepAnalysis::initializeResults(const Circuit& circuit, const NodeIndexM
 
     for (const auto& pair : vs_map) current_vars.push_back("I(" + pair.first + ")");
     for (const auto& pair : l_map) current_vars.push_back("I(" + pair.first + ")");
-    for (const auto& elem : circuit.getElements()) {
-        if (elem->getType() == "Resistor") current_vars.push_back("I(" + elem->getName() + ")");
+    for (const auto& elem_ptr : circuit.getElements()) {
+        if (elem_ptr->getType() == "Resistor") current_vars.push_back("I(" + elem_ptr->getName() + ")");
     }
 
     sort(voltage_vars.begin(), voltage_vars.end());
@@ -564,7 +425,50 @@ const std::vector<double>& ACSweepAnalysis::getFrequencyPoints() const { return 
 PhaseSweepAnalysis::PhaseSweepAnalysis(const std::string& src, double start_phase, double end_phase, double base_freq, int points)
     : source_name(src), start_phase_deg(start_phase), end_phase_deg(end_phase), base_freq_hz(base_freq), num_points(points) {}
 
-void PhaseSweepAnalysis::analyze(Circuit& circuit, MNAMatrix& mna_matrix, const LinearSolver& solver) {}
-void PhaseSweepAnalysis::displayResults() const {}
+void PhaseSweepAnalysis::analyze(Circuit& circuit, MNAMatrix& mna_matrix, const LinearSolver& solver) {
+    results.clear();
+    phase_points.clear();
+    ComplexMNAMatrix complex_mna;
+    ComplexLinearSolver complex_solver;
+
+    double omega = 2 * M_PI * base_freq_hz;
+    double phase_step = (end_phase_deg - start_phase_deg) / (num_points - 1);
+
+    for (int i = 0; i < num_points; ++i) {
+        double phase_deg = start_phase_deg + i * phase_step;
+        double phase_rad = phase_deg * M_PI / 180.0;
+        phase_points.push_back(phase_deg);
+
+        try {
+            NodeIndexMap node_map;
+            std::map<std::string, int> ac_source_map;
+            complex_mna.build(circuit, omega, node_map, ac_source_map);
+
+            // Set the source with the current phase
+            if (ac_source_map.count(source_name)) {
+                int source_idx = node_map.size() + ac_source_map.at(source_name);
+                complex_mna.getRHS()[source_idx] = std::polar(1.0, phase_rad); // 1V with current phase
+            }
+
+            ComplexVector solution = complex_solver.solve(complex_mna.getA(), complex_mna.getRHS());
+
+            for (const auto& pair : node_map) {
+                results["V(" + pair.first + ")"].push_back(solution[pair.second]);
+            }
+
+        } catch (const std::runtime_error& e) {
+            ErrorManager::displayError("Phase analysis failed at " + std::to_string(phase_deg) + "°: " + e.what());
+            return;
+        }
+    }
+}
+
+void PhaseSweepAnalysis::displayResults() const {
+    std::cout << "[Phase Sweep] Analysis complete: " << phase_points.size() << " phase points" << std::endl;
+    for (const auto& pair : results) {
+        std::cout << "[Phase Sweep] " << pair.first << ": " << pair.second.size() << " complex values" << std::endl;
+    }
+}
+
 const std::map<std::string, std::vector<Complex>>& PhaseSweepAnalysis::getComplexResults() const { return results; }
 const std::vector<double>& PhaseSweepAnalysis::getPhasePoints() const { return phase_points; }

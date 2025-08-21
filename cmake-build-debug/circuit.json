@@ -1,4 +1,117 @@
 {
-    "circuit_elements": [],
-    "ground_node": ""
+    "circuit_elements": [
+        {
+            "polymorphic_id": 2147483649,
+            "polymorphic_name": "IndependentVoltageSource",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "I4",
+                        "node1_id": "N1024",
+                        "node2_id": "N1026"
+                    },
+                    "voltage_value": 5.0
+                }
+            }
+        },
+        {
+            "polymorphic_id": 2147483650,
+            "polymorphic_name": "Resistor",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "R1",
+                        "node1_id": "N936",
+                        "node2_id": "N938"
+                    },
+                    "resistance": 1000.0
+                }
+            }
+        },
+        {
+            "polymorphic_id": 2147483651,
+            "polymorphic_name": "Capacitor",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "C2",
+                        "node1_id": "N1045",
+                        "node2_id": "N1047"
+                    },
+                    "capacitance": 0.000001
+                }
+            }
+        },
+        {
+            "polymorphic_id": 2147483652,
+            "polymorphic_name": "Ground",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "GND",
+                        "node1_id": "N1741",
+                        "node2_id": "0"
+                    }
+                }
+            }
+        },
+        {
+            "polymorphic_id": 2147483653,
+            "polymorphic_name": "CircuitWire",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "W5",
+                        "node1_id": "N1026",
+                        "node2_id": "N936"
+                    }
+                }
+            }
+        },
+        {
+            "polymorphic_id": 5,
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "W6",
+                        "node1_id": "N938",
+                        "node2_id": "N1045"
+                    }
+                }
+            }
+        },
+        {
+            "polymorphic_id": 5,
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "W7",
+                        "node1_id": "N1047",
+                        "node2_id": "N1741"
+                    }
+                }
+            }
+        },
+        {
+            "polymorphic_id": 5,
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "W8",
+                        "node1_id": "N1741",
+                        "node2_id": "N1026"
+                    }
+                }
+            }
+        }
+    ],
+    "ground_node": "N1741"
 }

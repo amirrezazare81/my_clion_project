@@ -61,4 +61,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/test_simulator.dir/DependInfo.cmake"
   "CMakeFiles/test_pin_wiring.dir/DependInfo.cmake"
   "CMakeFiles/test_mna_system.dir/DependInfo.cmake"
+  "CMakeFiles/test_simple_analysis.dir/DependInfo.cmake"
   )

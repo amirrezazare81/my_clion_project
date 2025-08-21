@@ -167,6 +167,19 @@ test_mna_system/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_mna_system.dir\build.make CMakeFiles/test_mna_system.dir/build
 .PHONY : test_mna_system/fast
 
+#=============================================================================
+# Target rules for targets named test_simple_analysis
+
+# Build rule for target.
+test_simple_analysis: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test_simple_analysis
+.PHONY : test_simple_analysis
+
+# fast build rule for target.
+test_simple_analysis/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/build
+.PHONY : test_simple_analysis/fast
+
 Analyzers.obj: Analyzers.cpp.obj
 .PHONY : Analyzers.obj
 
@@ -221,6 +234,7 @@ Circuit.obj: Circuit.cpp.obj
 # target to build an object file
 Circuit.cpp.obj:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Circuit.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Circuit.cpp.obj
 .PHONY : Circuit.cpp.obj
 
 Circuit.i: Circuit.cpp.i
@@ -229,6 +243,7 @@ Circuit.i: Circuit.cpp.i
 # target to preprocess a source file
 Circuit.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Circuit.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Circuit.cpp.i
 .PHONY : Circuit.cpp.i
 
 Circuit.s: Circuit.cpp.s
@@ -237,6 +252,7 @@ Circuit.s: Circuit.cpp.s
 # target to generate assembly for a file
 Circuit.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Circuit.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Circuit.cpp.s
 .PHONY : Circuit.cpp.s
 
 Element.obj: Element.cpp.obj
@@ -245,6 +261,7 @@ Element.obj: Element.cpp.obj
 # target to build an object file
 Element.cpp.obj:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Element.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Element.cpp.obj
 .PHONY : Element.cpp.obj
 
 Element.i: Element.cpp.i
@@ -253,6 +270,7 @@ Element.i: Element.cpp.i
 # target to preprocess a source file
 Element.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Element.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Element.cpp.i
 .PHONY : Element.cpp.i
 
 Element.s: Element.cpp.s
@@ -261,6 +279,7 @@ Element.s: Element.cpp.s
 # target to generate assembly for a file
 Element.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Element.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Element.cpp.s
 .PHONY : Element.cpp.s
 
 ErrorManager.obj: ErrorManager.cpp.obj
@@ -269,6 +288,7 @@ ErrorManager.obj: ErrorManager.cpp.obj
 # target to build an object file
 ErrorManager.cpp.obj:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/ErrorManager.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/ErrorManager.cpp.obj
 .PHONY : ErrorManager.cpp.obj
 
 ErrorManager.i: ErrorManager.cpp.i
@@ -277,6 +297,7 @@ ErrorManager.i: ErrorManager.cpp.i
 # target to preprocess a source file
 ErrorManager.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/ErrorManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/ErrorManager.cpp.i
 .PHONY : ErrorManager.cpp.i
 
 ErrorManager.s: ErrorManager.cpp.s
@@ -285,6 +306,7 @@ ErrorManager.s: ErrorManager.cpp.s
 # target to generate assembly for a file
 ErrorManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/ErrorManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/ErrorManager.cpp.s
 .PHONY : ErrorManager.cpp.s
 
 GUI.obj: GUI.cpp.obj
@@ -389,6 +411,7 @@ Node.obj: Node.cpp.obj
 # target to build an object file
 Node.cpp.obj:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Node.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Node.cpp.obj
 .PHONY : Node.cpp.obj
 
 Node.i: Node.cpp.i
@@ -397,6 +420,7 @@ Node.i: Node.cpp.i
 # target to preprocess a source file
 Node.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Node.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Node.cpp.i
 .PHONY : Node.cpp.i
 
 Node.s: Node.cpp.s
@@ -405,7 +429,35 @@ Node.s: Node.cpp.s
 # target to generate assembly for a file
 Node.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Node.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Node.cpp.s
 .PHONY : Node.cpp.s
+
+Oscilloscope.obj: Oscilloscope.cpp.obj
+.PHONY : Oscilloscope.obj
+
+# target to build an object file
+Oscilloscope.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Oscilloscope.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Oscilloscope.cpp.obj
+.PHONY : Oscilloscope.cpp.obj
+
+Oscilloscope.i: Oscilloscope.cpp.i
+.PHONY : Oscilloscope.i
+
+# target to preprocess a source file
+Oscilloscope.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Oscilloscope.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Oscilloscope.cpp.i
+.PHONY : Oscilloscope.cpp.i
+
+Oscilloscope.s: Oscilloscope.cpp.s
+.PHONY : Oscilloscope.s
+
+# target to generate assembly for a file
+Oscilloscope.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Oscilloscope.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/Oscilloscope.cpp.s
+.PHONY : Oscilloscope.cpp.s
 
 Pin.obj: Pin.cpp.obj
 .PHONY : Pin.obj
@@ -575,6 +627,33 @@ SignalProcessor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.s
 .PHONY : SignalProcessor.cpp.s
 
+SimpleAnalysis.obj: SimpleAnalysis.cpp.obj
+.PHONY : SimpleAnalysis.obj
+
+# target to build an object file
+SimpleAnalysis.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/SimpleAnalysis.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/SimpleAnalysis.cpp.obj
+.PHONY : SimpleAnalysis.cpp.obj
+
+SimpleAnalysis.i: SimpleAnalysis.cpp.i
+.PHONY : SimpleAnalysis.i
+
+# target to preprocess a source file
+SimpleAnalysis.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/SimpleAnalysis.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/SimpleAnalysis.cpp.i
+.PHONY : SimpleAnalysis.cpp.i
+
+SimpleAnalysis.s: SimpleAnalysis.cpp.s
+.PHONY : SimpleAnalysis.s
+
+# target to generate assembly for a file
+SimpleAnalysis.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/SimpleAnalysis.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/SimpleAnalysis.cpp.s
+.PHONY : SimpleAnalysis.cpp.s
+
 Solvers.obj: Solvers.cpp.obj
 .PHONY : Solvers.obj
 
@@ -719,6 +798,30 @@ test_pin_wiring.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_pin_wiring.dir\build.make CMakeFiles/test_pin_wiring.dir/test_pin_wiring.cpp.s
 .PHONY : test_pin_wiring.cpp.s
 
+test_simple_analysis.obj: test_simple_analysis.cpp.obj
+.PHONY : test_simple_analysis.obj
+
+# target to build an object file
+test_simple_analysis.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/test_simple_analysis.cpp.obj
+.PHONY : test_simple_analysis.cpp.obj
+
+test_simple_analysis.i: test_simple_analysis.cpp.i
+.PHONY : test_simple_analysis.i
+
+# target to preprocess a source file
+test_simple_analysis.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/test_simple_analysis.cpp.i
+.PHONY : test_simple_analysis.cpp.i
+
+test_simple_analysis.s: test_simple_analysis.cpp.s
+.PHONY : test_simple_analysis.s
+
+# target to generate assembly for a file
+test_simple_analysis.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/test_simple_analysis.cpp.s
+.PHONY : test_simple_analysis.cpp.s
+
 test_simulator.obj: test_simulator.cpp.obj
 .PHONY : test_simulator.obj
 
@@ -754,6 +857,7 @@ help:
 	@echo ... my_clion_project
 	@echo ... test_mna_system
 	@echo ... test_pin_wiring
+	@echo ... test_simple_analysis
 	@echo ... test_simulator
 	@echo ... Analyzers.obj
 	@echo ... Analyzers.i
@@ -785,6 +889,9 @@ help:
 	@echo ... Node.obj
 	@echo ... Node.i
 	@echo ... Node.s
+	@echo ... Oscilloscope.obj
+	@echo ... Oscilloscope.i
+	@echo ... Oscilloscope.s
 	@echo ... Pin.obj
 	@echo ... Pin.i
 	@echo ... Pin.s
@@ -806,6 +913,9 @@ help:
 	@echo ... SignalProcessor.obj
 	@echo ... SignalProcessor.i
 	@echo ... SignalProcessor.s
+	@echo ... SimpleAnalysis.obj
+	@echo ... SimpleAnalysis.i
+	@echo ... SimpleAnalysis.s
 	@echo ... Solvers.obj
 	@echo ... Solvers.i
 	@echo ... Solvers.s
@@ -824,6 +934,9 @@ help:
 	@echo ... test_pin_wiring.obj
 	@echo ... test_pin_wiring.i
 	@echo ... test_pin_wiring.s
+	@echo ... test_simple_analysis.obj
+	@echo ... test_simple_analysis.i
+	@echo ... test_simple_analysis.s
 	@echo ... test_simulator.obj
 	@echo ... test_simulator.i
 	@echo ... test_simulator.s

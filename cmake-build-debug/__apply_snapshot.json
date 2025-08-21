@@ -1,4 +1,51 @@
 {
-    "circuit_elements": [],
+    "circuit_elements": [
+        {
+            "polymorphic_id": 2147483649,
+            "polymorphic_name": "SinusoidalVoltageSource",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "S1",
+                        "node1_id": "N1221",
+                        "node2_id": "N1223"
+                    },
+                    "v_offset": 0.0,
+                    "v_amplitude": 5.0,
+                    "frequency": 1000.0
+                }
+            }
+        },
+        {
+            "polymorphic_id": 2147483650,
+            "polymorphic_name": "Resistor",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "R2",
+                        "node1_id": "N639",
+                        "node2_id": "N641"
+                    },
+                    "resistance": 1000.0
+                }
+            }
+        },
+        {
+            "polymorphic_id": 2,
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "R3",
+                        "node1_id": "N1153",
+                        "node2_id": "N1155"
+                    },
+                    "resistance": 1000.0
+                }
+            }
+        }
+    ],
     "ground_node": ""
 }

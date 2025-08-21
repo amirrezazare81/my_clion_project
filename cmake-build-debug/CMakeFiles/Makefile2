@@ -66,6 +66,7 @@ all: CMakeFiles/my_clion_project.dir/all
 all: CMakeFiles/test_simulator.dir/all
 all: CMakeFiles/test_pin_wiring.dir/all
 all: CMakeFiles/test_mna_system.dir/all
+all: CMakeFiles/test_simple_analysis.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -77,6 +78,7 @@ clean: CMakeFiles/my_clion_project.dir/clean
 clean: CMakeFiles/test_simulator.dir/clean
 clean: CMakeFiles/test_pin_wiring.dir/clean
 clean: CMakeFiles/test_mna_system.dir/clean
+clean: CMakeFiles/test_simple_analysis.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -86,12 +88,12 @@ clean: CMakeFiles/test_mna_system.dir/clean
 CMakeFiles/my_clion_project.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22 "Built target my_clion_project"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 "Built target my_clion_project"
 .PHONY : CMakeFiles/my_clion_project.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/my_clion_project.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles 22
+	$(CMAKE_COMMAND) -E cmake_progress_start F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles 24
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/my_clion_project.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/my_clion_project.dir/rule
@@ -112,7 +114,7 @@ CMakeFiles/my_clion_project.dir/clean:
 CMakeFiles/test_simulator.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simulator.dir\build.make CMakeFiles/test_simulator.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simulator.dir\build.make CMakeFiles/test_simulator.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=27,28 "Built target test_simulator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=37,38 "Built target test_simulator"
 .PHONY : CMakeFiles/test_simulator.dir/all
 
 # Build rule for subdir invocation for target.
@@ -138,7 +140,7 @@ CMakeFiles/test_simulator.dir/clean:
 CMakeFiles/test_pin_wiring.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_pin_wiring.dir\build.make CMakeFiles/test_pin_wiring.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_pin_wiring.dir\build.make CMakeFiles/test_pin_wiring.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=25,26 "Built target test_pin_wiring"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=27,28 "Built target test_pin_wiring"
 .PHONY : CMakeFiles/test_pin_wiring.dir/all
 
 # Build rule for subdir invocation for target.
@@ -164,7 +166,7 @@ CMakeFiles/test_pin_wiring.dir/clean:
 CMakeFiles/test_mna_system.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_mna_system.dir\build.make CMakeFiles/test_mna_system.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_mna_system.dir\build.make CMakeFiles/test_mna_system.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=23,24 "Built target test_mna_system"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=25,26 "Built target test_mna_system"
 .PHONY : CMakeFiles/test_mna_system.dir/all
 
 # Build rule for subdir invocation for target.
@@ -182,6 +184,32 @@ test_mna_system: CMakeFiles/test_mna_system.dir/rule
 CMakeFiles/test_mna_system.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_mna_system.dir\build.make CMakeFiles/test_mna_system.dir/clean
 .PHONY : CMakeFiles/test_mna_system.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_simple_analysis.dir
+
+# All Build rule for target.
+CMakeFiles/test_simple_analysis.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=29,30,31,32,33,34,35,36 "Built target test_simple_analysis"
+.PHONY : CMakeFiles/test_simple_analysis.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_simple_analysis.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles 8
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/test_simple_analysis.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles 0
+.PHONY : CMakeFiles/test_simple_analysis.dir/rule
+
+# Convenience name for target.
+test_simple_analysis: CMakeFiles/test_simple_analysis.dir/rule
+.PHONY : test_simple_analysis
+
+# clean rule for target.
+CMakeFiles/test_simple_analysis.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simple_analysis.dir\build.make CMakeFiles/test_simple_analysis.dir/clean
+.PHONY : CMakeFiles/test_simple_analysis.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

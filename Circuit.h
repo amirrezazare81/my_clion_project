@@ -10,6 +10,10 @@
 #include "Node.h"
 #include "Element.h"
 
+// Forward declarations for SimpleAnalysis types to avoid circular includes
+struct TransientSeries;
+struct ACSweepVals;
+
 // --- 5. Circuit (Manages elements and nodes) ---
 class Circuit {
 private:
@@ -17,9 +21,9 @@ private:
     std::vector<std::unique_ptr<Element>> elements;
     std::string ground_node_id;
     std::map<std::string, std::string> node_labels; // <-- NEW: To store node labels
-    Node* getOrCreateNode(const std::string& node_id);
 
 public:
+    Node* getOrCreateNode(const std::string& node_id);
     Circuit();
     ~Circuit();
     Circuit(const Circuit&) = delete;
@@ -48,6 +52,8 @@ public:
     const std::map<std::string, double>& getPreviousInductorCurrents() const;
     void saveToFile(const std::string& filename) const;
 
+
+
     // --- NEW: Methods for node labels ---
     void addNodeLabel(const std::string& node_id, const std::string& label);
     const std::map<std::string, std::string>& getNodeLabels() const;
@@ -55,6 +61,11 @@ public:
     // State for transient analysis
     std::map<std::string, double> previous_node_voltages;
     std::map<std::string, double> previous_inductor_currents;
+
+    // New analysis methods using simplified logic
+    bool analyzeDC();
+    TransientSeries analyzeTransientMulti(double t_step, double t_total, const std::vector<std::string>& desiredSignals);
+    ACSweepVals ACsweep(double startOmega, double stopOmega, int stepCount, std::string desiredSignal);
 
     template<class Archive>
     void serialize(Archive& archive) {

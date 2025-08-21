@@ -34,7 +34,7 @@ void MNAMatrix::build(const Circuit& circuit, bool is_transient, double currentT
     // FIX: Correctly iterate over a vector of unique_ptrs
     for (const auto& elem : circuit.getElements()) {
         const std::string& type = elem->getType();
-        if (type == "IndependentVoltageSource" || type == "PulseVoltageSource" || type == "WaveformVoltageSource" || type == "PhaseVoltageSource" || type == "SinusoidalVoltageSource" || type == "ACVoltageSource" || type == "VoltageControlledVoltageSource") {
+        if (type == "IndependentVoltageSource" || type == "PulseVoltageSource" || type == "WaveformVoltageSource" || type == "PhaseVoltageSource" || type == "SinusoidalVoltageSource" || type == "VoltageControlledVoltageSource") {
             voltage_source_current_map[elem->getName()] = vs_idx_counter++;
         } else if (type == "Inductor") {
             inductor_current_map[elem->getName()] = l_idx_counter++;
@@ -75,9 +75,17 @@ void MNAMatrix::build(const Circuit& circuit, bool is_transient, double currentT
             // Pulse current sources need current time for transient analysis
             static_cast<PulseCurrentSource*>(elem.get())->contributeToMNA(A_matrix, b_vector, num_voltage_nodes, node_map, prev_node_voltages, is_transient, currentTime);
         }
-        else if (type == "IndependentVoltageSource" || type == "PulseVoltageSource" || type == "WaveformVoltageSource" || type == "PhaseVoltageSource" || type == "SinusoidalVoltageSource" || type == "ACVoltageSource" || type == "VoltageControlledVoltageSource") {
+        else if (type == "IndependentVoltageSource" || type == "PulseVoltageSource" || type == "WaveformVoltageSource" || type == "PhaseVoltageSource" || type == "SinusoidalVoltageSource" || type == "VoltageControlledVoltageSource") {
             int n1_idx = node_map.count(elem->getNode1Id()) ? node_map.at(elem->getNode1Id()) : -1;
             int n2_idx = node_map.count(elem->getNode2Id()) ? node_map.at(elem->getNode2Id()) : -1;
+            
+            // Debug output for voltage source node mapping
+            static int vs_debug_count = 0;
+            if (vs_debug_count < 5) {
+                std::cout << "[MNA VS] " << elem->getName() << " (" << type << "): n1=" << elem->getNode1Id() 
+                          << "->" << n1_idx << ", n2=" << elem->getNode2Id() << "->" << n2_idx << std::endl;
+                vs_debug_count++;
+            }
             
             if (!voltage_source_current_map.count(elem->getName())) {
                 ErrorManager::warn("[MNA] Voltage source " + elem->getName() + " not found in current map");
@@ -85,27 +93,39 @@ void MNAMatrix::build(const Circuit& circuit, bool is_transient, double currentT
             }
             int vs_curr_idx = num_voltage_nodes + voltage_source_current_map.at(elem->getName());
 
+            // Voltage source constraint: V(n1) - V(n2) = V_source
+            // Current contribution: I_vs flows from n1 to n2
             if (n1_idx != -1) { A_matrix[n1_idx][vs_curr_idx] += 1.0; }
             if (n2_idx != -1) { A_matrix[n2_idx][vs_curr_idx] -= 1.0; }
             if (n1_idx != -1) { A_matrix[vs_curr_idx][n1_idx] += 1.0; }
             if (n2_idx != -1) { A_matrix[vs_curr_idx][n2_idx] -= 1.0; }
 
             if (type == "PulseVoltageSource") {
-                b_vector[vs_curr_idx] = static_cast<const PulseVoltageSource*>(elem.get())->getVoltageAtTime(currentTime);
+                double voltage = static_cast<const PulseVoltageSource*>(elem.get())->getVoltageAtTime(currentTime);
+                b_vector[vs_curr_idx] = voltage;
+                
+                // Debug output for first few time steps
+                static int pulse_debug_count = 0;
+                if (pulse_debug_count < 10) {
+                    std::cout << "[MNA PULSE] " << elem->getName() << " at t=" << currentTime 
+                              << "s: b_vector[" << vs_curr_idx << "] = " << voltage << "V" << std::endl;
+                    pulse_debug_count++;
+                }
             } else if (type == "WaveformVoltageSource") {
                 b_vector[vs_curr_idx] = static_cast<const WaveformVoltageSource*>(elem.get())->getVoltageAtTime(currentTime);
             } else if (type == "PhaseVoltageSource") {
                 b_vector[vs_curr_idx] = static_cast<const PhaseVoltageSource*>(elem.get())->getVoltageAtTime(currentTime);
             } else if (type == "SinusoidalVoltageSource") {
-                 b_vector[vs_curr_idx] = static_cast<const SinusoidalVoltageSource*>(elem.get())->getVoltageAtTime(currentTime);
-            } else if (type == "ACVoltageSource") {
-                auto* ac_vs = static_cast<const ACVoltageSource*>(elem.get());
-                // For transient analysis, AC voltage sources can be treated as sinusoidal
-                // V(t) = magnitude * cos(2*pi*frequency*t + phase)
-                double freq = ac_vs->getFrequency();
-                double mag = ac_vs->getMagnitude();
-                double phase_rad = ac_vs->getPhase() * M_PI / 180.0;
-                b_vector[vs_curr_idx] = mag * cos(2.0 * M_PI * freq * currentTime + phase_rad);
+                 double voltage = static_cast<const SinusoidalVoltageSource*>(elem.get())->getVoltageAtTime(currentTime);
+                 b_vector[vs_curr_idx] = voltage;
+                 
+                 // Debug output for first few time steps
+                 static int sin_debug_count = 0;
+                 if (sin_debug_count < 10) {
+                     std::cout << "[MNA SIN] " << elem->getName() << " at t=" << currentTime 
+                               << "s: b_vector[" << vs_curr_idx << "] = " << voltage << "V" << std::endl;
+                     sin_debug_count++;
+                 }
             } else if (type == "VoltageControlledVoltageSource") {
                 auto* vcvs = static_cast<const VoltageControlledVoltageSource*>(elem.get());
                 int ctrl_n1_idx = node_map.count(vcvs->getControlNode1Id()) ? node_map.at(vcvs->getControlNode1Id()) : -1;
@@ -206,20 +226,36 @@ void MNAMatrix::build(const Circuit& circuit, bool is_transient, double currentT
         std::stringstream ss; ss << "[MNA] build end, rhs_norm2=" << rhs_norm << ", build_time=" << build_duration.count() << "μs";
         ErrorManager::info(ss.str());
     }
+    
+    // Debug: Show b_vector values for voltage sources
+    static int b_vector_debug_count = 0;
+    if (b_vector_debug_count < 3) {
+        std::stringstream b_debug;
+        b_debug << "[MNA] b_vector at t=" << currentTime << "s: [";
+        for (size_t i = 0; i < std::min(size_t(10), b_vector.size()); ++i) {
+            b_debug << b_vector[i] << " ";
+        }
+        b_debug << "]";
+        ErrorManager::info(b_debug.str());
+        b_vector_debug_count++;
+    }
 }
 const Matrix& MNAMatrix::getA() const { return A_matrix; }
 const Vector& MNAMatrix::getRHS() const { return b_vector; }
 
 
 // --- ComplexMNAMatrix Implementation ---
+// Replace the existing ComplexMNAMatrix::build function with this one.
+
 void ComplexMNAMatrix::build(const Circuit& circuit, double omega, NodeIndexMap& node_map, std::map<std::string, int>& ac_source_map) {
     std::vector<Node*> non_ground_nodes;
-    circuit.getNonGroundNodes(non_ground_nodes, node_map); // <-- FIX: Corrected typo
+    circuit.getNonGroundNodes(non_ground_nodes, node_map);
     int num_nodes = node_map.size();
     ac_source_map.clear();
     int ac_source_count = 0;
     for (const auto& elem : circuit.getElements()) {
-        if (elem->getType() == "IndependentVoltageSource" || 
+        // FIX: Broadened the check to include any source that might have an AC value.
+        if (elem->getType() == "IndependentVoltageSource" ||
             elem->getType() == "SinusoidalVoltageSource" ||
             elem->getType() == "ACVoltageSource") {
             ac_source_map[elem->getName()] = ac_source_count++;
@@ -234,7 +270,7 @@ void ComplexMNAMatrix::build(const Circuit& circuit, double omega, NodeIndexMap&
         int n2_idx = node_map.count(elem->getNode2Id()) ? node_map.at(elem->getNode2Id()) : -1;
         Complex admittance = {0.0, 0.0};
         std::string type = elem->getType();
-        
+
         if (type == "Resistor") {
             admittance = 1.0 / elem->getValue();
         } else if (type == "Capacitor") {
@@ -243,18 +279,27 @@ void ComplexMNAMatrix::build(const Circuit& circuit, double omega, NodeIndexMap&
             admittance = (omega > 1e-9) ? 1.0 / (j * omega * elem->getValue()) : 1e12;
 
         } else if (ac_source_map.count(elem->getName())) {
-            // Handle voltage sources (including AC voltage sources)
+            // Handle voltage sources
             int vs_idx = num_nodes + ac_source_map.at(elem->getName());
             if (n1_idx != -1) { A_matrix[n1_idx][vs_idx] += 1.0; A_matrix[vs_idx][n1_idx] += 1.0; }
             if (n2_idx != -1) { A_matrix[n2_idx][vs_idx] -= 1.0; A_matrix[vs_idx][n2_idx] -= 1.0; }
-            
-            // Set the voltage for AC voltage sources
+
+            // --- FIX: Correctly set the RHS vector for different AC-compatible sources ---
             if (type == "ACVoltageSource") {
+                // Use the explicit complex voltage for AC sources.
                 auto* ac_voltage = static_cast<const ACVoltageSource*>(elem.get());
                 b_vector[vs_idx] = ac_voltage->getComplexVoltage();
+            } else if (type == "SinusoidalVoltageSource") {
+                // Treat a SIN source in an AC analysis as a phasor with magnitude and 0 phase.
+                // The getValue() method for a SinusoidalVoltageSource should return its amplitude.
+                b_vector[vs_idx] = elem->getValue();
+            } else {
+                // For a standard DC source (IndependentVoltageSource) in an AC analysis,
+                // the AC value is its DC value (a phasor with 0 phase).
+                b_vector[vs_idx] = elem->getValue();
             }
         }
-        
+
         // Add admittance contributions for passive elements
         if (std::abs(admittance) > 0) {
             if (n1_idx != -1) A_matrix[n1_idx][n1_idx] += admittance;

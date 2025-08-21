@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "test_mna_system.exe"
+			"path" : "test_pin_wiring.exe"
 		},
 		{
-			"path" : "test_mna_system.pdb"
+			"path" : "test_pin_wiring.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -17,6 +17,7 @@
 			"target_link_libraries",
 			"set_target_properties",
 			"find_package",
+			"add_definitions",
 			"target_include_directories"
 		],
 		"files" : 
@@ -32,19 +33,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 73,
+				"line" : 67,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 74,
+				"line" : 68,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 17,
+				"line" : 19,
 				"parent" : 0
 			},
 			{
@@ -60,13 +61,19 @@
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 75,
+				"line" : 14,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 69,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 78,
+				"line" : 72,
 				"parent" : 0
 			}
 		]
@@ -80,14 +87,21 @@
 					"fragment" : " -Wa,-mbig-obj -g -g1 -std=gnu++17 -fdiagnostics-color=always"
 				}
 			],
-			"includes" : 
+			"defines" : 
 			[
 				{
 					"backtrace" : 6,
+					"define" : "_NOMINMAX"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 7,
 					"path" : "F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include"
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 7,
 					"isSystem" : true,
 					"path" : "F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2"
 				}
@@ -97,7 +111,7 @@
 			{
 				"backtraces" : 
 				[
-					7
+					8
 				],
 				"standard" : "17"
 			},
@@ -107,7 +121,7 @@
 			]
 		}
 	],
-	"id" : "test_mna_system::@6890427a1f51a3e7e1df",
+	"id" : "test_pin_wiring::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -152,8 +166,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "test_mna_system",
-	"nameOnDisk" : "test_mna_system.exe",
+	"name" : "test_pin_wiring",
+	"nameOnDisk" : "test_pin_wiring.exe",
 	"paths" : 
 	{
 		"build" : ".",
@@ -174,7 +188,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "test_mna_system.cpp",
+			"path" : "test_pin_wiring.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

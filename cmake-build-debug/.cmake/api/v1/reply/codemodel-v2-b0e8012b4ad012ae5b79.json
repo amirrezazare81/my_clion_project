@@ -18,7 +18,8 @@
 						0,
 						1,
 						2,
-						3
+						3,
+						4
 					]
 				}
 			],
@@ -36,7 +37,8 @@
 						0,
 						1,
 						2,
-						3
+						3,
+						4
 					]
 				}
 			],
@@ -45,28 +47,35 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "my_clion_project::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-my_clion_project-Debug-990855b24297a47339ca.json",
+					"jsonFile" : "target-my_clion_project-Debug-4e2e4655c085e2e16075.json",
 					"name" : "my_clion_project",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "test_mna_system::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-test_mna_system-Debug-a634f277423be061babd.json",
+					"jsonFile" : "target-test_mna_system-Debug-1d4502d4edebed5cbddb.json",
 					"name" : "test_mna_system",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "test_pin_wiring::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-test_pin_wiring-Debug-730b858bd906b2fdce40.json",
+					"jsonFile" : "target-test_pin_wiring-Debug-19a872d4ba3624738932.json",
 					"name" : "test_pin_wiring",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
+					"id" : "test_simple_analysis::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_simple_analysis-Debug-166791791d8e309b61be.json",
+					"name" : "test_simple_analysis",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
 					"id" : "test_simulator::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-test_simulator-Debug-e969df9f912022ea0c2d.json",
+					"jsonFile" : "target-test_simulator-Debug-51273a5d010da01b83b1.json",
 					"name" : "test_simulator",
 					"projectIndex" : 0
 				}

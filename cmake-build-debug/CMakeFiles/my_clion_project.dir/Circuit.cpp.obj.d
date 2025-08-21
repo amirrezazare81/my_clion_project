@@ -278,6 +278,7 @@ CMakeFiles/my_clion_project.dir/Circuit.cpp.obj: \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stream_iterator.h \
  F:/OOP/my_clion_project/libs/cereal-1.3.2/include/cereal/external/base64.hpp \
  F:\OOP\my_clion_project\ErrorManager.h \
+ F:\OOP\my_clion_project\SimpleAnalysis.h \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/algorithm \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/pstl/glue_algorithm_defs.h \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/queue \

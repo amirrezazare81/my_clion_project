@@ -14,3 +14,10 @@ void Node::setAsGround() {
     isGround = true;
     voltage = 0.0;
 }
+
+void Node::setAsGround(bool ground) {
+    isGround = ground;
+    if (ground) {
+        voltage = 0.0;
+    }
+}

@@ -2,11 +2,15 @@
 #include "ErrorManager.h"
 #include "Element.h"
 #include "Node.h"
+#include "SimpleAnalysis.h"
 #include <iostream>
 #include <algorithm>
 #include <set>
 #include <queue>
 #include <stdexcept>
+
+// Forward declaration for test function
+extern void testEnhancedLogging();
 #include <fstream>
 
 Circuit::Circuit() : ground_node_id("") { LOG_INFO("[Circuit] constructed"); }
@@ -38,6 +42,7 @@ void Circuit::addElement(std::unique_ptr<Element> element) {
         getOrCreateNode(element->getNode2Id());
     }
     if (element->getType() == "Ground") {
+        LOG_INFO(std::string("[Circuit] Ground element added with node: ") + element->getNode1Id());
         setGroundNode(element->getNode1Id());
     }
     elements.push_back(std::move(element));
@@ -63,8 +68,21 @@ void Circuit::clear() {
 }
 
 void Circuit::setGroundNode(const std::string& node_id) {
+    // Clear previous ground node if it exists
+    if (!ground_node_id.empty() && nodes.count(ground_node_id)) {
+        nodes[ground_node_id]->setAsGround(false);
+    }
+
     ground_node_id = node_id;
-    getOrCreateNode(node_id)->setAsGround();
+    Node* ground_node = getOrCreateNode(node_id);
+    ground_node->setAsGround();
+
+    // Clean up any "0" node that might exist from old ground implementation
+    if (nodes.count("0")) {
+        LOG_INFO("[Circuit] Removing old '0' node from ground implementation");
+        nodes.erase("0");
+    }
+
     LOG_INFO(std::string("[Circuit] set ground ") + node_id);
 }
 
@@ -170,6 +188,8 @@ int Circuit::getNumNonGroundNodes() const {
     return count;
 }
 
+
+
 void Circuit::updatePreviousNodeVoltages(const std::map<std::string, double>& current_voltages) {
     previous_node_voltages = current_voltages;
 }
@@ -197,4 +217,31 @@ void Circuit::addNodeLabel(const std::string& node_id, const std::string& label)
 
 const std::map<std::string, std::string>& Circuit::getNodeLabels() const {
     return node_labels;
+}
+
+// Implementation of new analysis methods
+bool Circuit::analyzeDC() {
+    return CircuitAnalyzer::analyzeDC(*this);
+}
+
+TransientSeries Circuit::analyzeTransientMulti(double t_step, double t_total, const std::vector<std::string>& desiredSignals) {
+    std::cout << "[Circuit] Calling SimpleAnalysis transient analysis..." << std::endl;
+    std::cout << "[Circuit] Parameters: t_step=" << t_step << ", t_total=" << t_total << std::endl;
+    std::cout << "[Circuit] Desired signals: " << desiredSignals.size() << std::endl;
+
+    // Test if enhanced logging is working
+    cout << "[Circuit] Testing enhanced logging..." << endl;
+    testEnhancedLogging();
+
+    TransientSeries result = CircuitAnalyzer::analyzeTransientMulti(*this, t_step, t_total, desiredSignals);
+
+    std::cout << "[Circuit] Analysis result: t.size()=" << result.t.size()
+              << ", ys.size()=" << result.ys.size()
+              << ", names.size()=" << result.names.size() << std::endl;
+
+    return result;
+}
+
+ACSweepVals Circuit::ACsweep(double startOmega, double stopOmega, int stepCount, std::string desiredSignal) {
+    return CircuitAnalyzer::ACsweep(*this, startOmega, stopOmega, stepCount, desiredSignal);
 }

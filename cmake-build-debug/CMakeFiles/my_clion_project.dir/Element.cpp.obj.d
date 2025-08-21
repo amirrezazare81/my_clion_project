@@ -528,4 +528,14 @@ CMakeFiles/my_clion_project.dir/Element.cpp.obj: \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/in6addr.h \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/psdk_inc/_ip_mreq1.h \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/mstcpip.h \
- F:\OOP\my_clion_project\ErrorManager.h
+ F:\OOP\my_clion_project\ErrorManager.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/iomanip \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/locale \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_facets_nonio.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ctime \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/time_members.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/messages_members.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/codecvt.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_facets_nonio.tcc \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_conv.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/quoted_string.h

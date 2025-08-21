@@ -8,3 +8,13 @@ public:
     static void save(const Circuit& circuit, const std::string& filepath);
     static void load(Circuit& circuit, const std::string& filepath);
 };
+
+
+
+
+
+
+
+
+
+

@@ -8,6 +8,9 @@
 // The SDL.h header redefines main to SDL_main for the linker
 int main(int argc, char* argv[]) {
     try {
+        // Clear the log file at startup
+        ErrorManager::clearLogFile();
+
         // Create and run the GUI application instead of the CLI menu
         GuiApplication app;
         app.run();

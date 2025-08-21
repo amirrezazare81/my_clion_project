@@ -1,0 +1,1 @@
+  -L"F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/lib"  "F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/lib/libSDL2main.a" "F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/lib/libSDL2.dll.a" -mwindows -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

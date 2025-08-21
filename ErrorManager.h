@@ -7,6 +7,7 @@ public:
     static void displayError(const std::string& message);
     static void logError(const std::string& message); // <-- FIX: Added missing declaration
     static void handleCriticalError(const std::string& message);
+    static void clearLogFile();
     static void info(const std::string& message);
     static void warn(const std::string& message);
 };

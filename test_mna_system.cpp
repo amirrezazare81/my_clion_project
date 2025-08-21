@@ -68,15 +68,17 @@ Circuit createPulseCircuit() {
 
 Circuit createACCircuit() {
     Circuit circuit;
-    
-    // Create nodes
-    circuit.addElement(std::make_unique<SinusoidalVoltageSource>("V1", "V1", "GND", 5.0, 1000.0, 0.0));
+
+    // FIX: Use an ACVoltageSource for AC analysis tests.
+    // It takes magnitude, frequency, and phase (in degrees).
+    // The frequency here is a default and will be swept during analysis.
+    circuit.addElement(std::make_unique<ACVoltageSource>("V1", "V1", "GND", 1.0, 1000.0, 0.0));
     circuit.addElement(std::make_unique<Resistor>("R1", "V1", "OUT", 1000.0));
     circuit.addElement(std::make_unique<Capacitor>("C1", "OUT", "GND", 1e-6));
-    
+
     // Set ground
     circuit.setGroundNode("GND");
-    
+
     return circuit;
 }
 

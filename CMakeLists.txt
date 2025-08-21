@@ -10,6 +10,8 @@ if(MINGW)
     # Alternative: reduce debug info to avoid linker issues
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g1")
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g1")
+    # Fix for Windows byte type conflict with std::byte
+    add_definitions(-D_NOMINMAX)
 endif()
 
 # --- Find Package Configurations ---
@@ -23,6 +25,7 @@ set(SDL2_image_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2_image-2.8.2/x86_64-w64
 find_package(SDL2_image REQUIRED)
 
 # --- Project Executable ---
+# Force CMake reconfiguration - added Oscilloscope.cpp - v3
 add_executable(my_clion_project
         main.cpp
         Analyzers.cpp
@@ -31,6 +34,7 @@ add_executable(my_clion_project
         Element.cpp
         ErrorManager.cpp
         GUI.cpp
+        Oscilloscope.cpp
         GraphExtractor.cpp
         InputParser.cpp
         Menu.cpp
@@ -42,6 +46,7 @@ add_executable(my_clion_project
         ProbeManager.cpp
         ProjectSerializer.cpp
         SignalProcessor.cpp
+        SimpleAnalysis.cpp
         Solvers.cpp
         TcpSocket.cpp
         Wire.cpp
@@ -80,6 +85,17 @@ set_target_properties(test_mna_system PROPERTIES
     CXX_STANDARD_REQUIRED ON
 )
 
+# Add Simple Analysis test executable
+add_executable(test_simple_analysis test_simple_analysis.cpp Circuit.cpp Element.cpp Node.cpp SimpleAnalysis.cpp ErrorManager.cpp Oscilloscope.cpp)
+target_link_libraries(test_simple_analysis ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_include_directories(test_simple_analysis PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
+
+# Set C++ standard for simple analysis test
+set_target_properties(test_simple_analysis PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
+
 # --- Include Directories ---
 target_include_directories(my_clion_project PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
@@ -88,6 +104,9 @@ target_include_directories(my_clion_project PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2_ttf-2.24.0/x86_64-w64-mingw32/include/SDL2"
         "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2_image-2.8.2/x86_64-w64-mingw32/include/SDL2"
 )
+
+# Define WITH_SDL macro for SDL-dependent code
+target_compile_definitions(my_clion_project PRIVATE WITH_SDL)
 
 # --- Link Libraries ---
 target_link_libraries(my_clion_project PRIVATE
