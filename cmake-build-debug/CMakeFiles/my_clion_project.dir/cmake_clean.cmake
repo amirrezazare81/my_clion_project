@@ -1,0 +1,37 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/my_clion_project.dir/Analyzers.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/Analyzers.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/CerealRegistrations.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/CerealRegistrations.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/Circuit.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/Circuit.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/Element.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/Element.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/ErrorManager.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/ErrorManager.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/GUI.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/GUI.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/InputParser.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/InputParser.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/Menu.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/Menu.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/Node.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/Node.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/Solvers.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/Solvers.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj.d"
+  "CMakeFiles/my_clion_project.dir/main.cpp.obj"
+  "CMakeFiles/my_clion_project.dir/main.cpp.obj.d"
+  "libmy_clion_project.dll.a"
+  "my_clion_project.exe"
+  "my_clion_project.exe.manifest"
+  "my_clion_project.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/my_clion_project.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
