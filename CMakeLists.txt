@@ -3,6 +3,15 @@ project(my_clion_project)
 
 set(CMAKE_CXX_STANDARD 17)
 
+# Fix for Cereal debug symbol issues on MinGW
+if(MINGW)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wa,-mbig-obj")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wa,-mbig-obj")
+    # Alternative: reduce debug info to avoid linker issues
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g1")
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g1")
+endif()
+
 # --- Find Package Configurations ---
 set(SDL2_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2-2.32.2/x86_64-w64-mingw32/lib/cmake/SDL2")
 find_package(SDL2 REQUIRED)
@@ -22,21 +31,51 @@ add_executable(my_clion_project
         Element.cpp
         ErrorManager.cpp
         GUI.cpp
+        GraphExtractor.cpp
         InputParser.cpp
         Menu.cpp
         Node.cpp
+        Pin.cpp
+        Plotter.cpp
+        PlotCursor.cpp
+        Probe.cpp
+        ProbeManager.cpp
         ProjectSerializer.cpp
+        SignalProcessor.cpp
         Solvers.cpp
         TcpSocket.cpp
+        Wire.cpp
 )
 
-# Add test executable
+# Add test executables
 add_executable(test_simulator test_simulator.cpp)
 target_link_libraries(test_simulator ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 target_include_directories(test_simulator PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
 
 # Set C++ standard for test
 set_target_properties(test_simulator PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
+
+# Add pin wiring test executable
+add_executable(test_pin_wiring test_pin_wiring.cpp)
+target_link_libraries(test_pin_wiring ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_include_directories(test_pin_wiring PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
+
+# Set C++ standard for pin wiring test
+set_target_properties(test_pin_wiring PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
+
+# Add MNA system test executable
+add_executable(test_mna_system test_mna_system.cpp)
+target_link_libraries(test_mna_system ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_include_directories(test_mna_system PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
+
+# Set C++ standard for MNA system test
+set_target_properties(test_mna_system PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )

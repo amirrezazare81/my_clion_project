@@ -1,0 +1,56 @@
+{
+    "circuit_elements": [
+        {
+            "polymorphic_id": 2147483649,
+            "polymorphic_name": "PulseVoltageSource",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "P1",
+                        "node1_id": "N1023",
+                        "node2_id": "N1025"
+                    },
+                    "v1_val": 0.0,
+                    "v2_val": 5.0,
+                    "td_val": 0.001,
+                    "tr_val": 0.0001,
+                    "tf_val": 0.0001,
+                    "pw_val": 0.002,
+                    "per_val": 0.005
+                }
+            }
+        },
+        {
+            "polymorphic_id": 2147483650,
+            "polymorphic_name": "Resistor",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "R2",
+                        "node1_id": "N541",
+                        "node2_id": "N543"
+                    },
+                    "resistance": 1000.0
+                }
+            }
+        },
+        {
+            "polymorphic_id": 2147483651,
+            "polymorphic_name": "Capacitor",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "C3",
+                        "node1_id": "N1055",
+                        "node2_id": "N1057"
+                    },
+                    "capacitance": 0.000001
+                }
+            }
+        }
+    ],
+    "ground_node": ""
+}

@@ -1,0 +1,87 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "my_clion_project",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "my_clion_project::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-my_clion_project-Debug-990855b24297a47339ca.json",
+					"name" : "my_clion_project",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_mna_system::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_mna_system-Debug-a634f277423be061babd.json",
+					"name" : "test_mna_system",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_pin_wiring::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_pin_wiring-Debug-730b858bd906b2fdce40.json",
+					"name" : "test_pin_wiring",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_simulator::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_simulator-Debug-e969df9f912022ea0c2d.json",
+					"name" : "test_simulator",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "F:/OOP/my_clion_project/cmake-build-debug",
+		"source" : "F:/OOP/my_clion_project"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

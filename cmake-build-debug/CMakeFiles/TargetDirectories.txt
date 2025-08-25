@@ -1,4 +1,6 @@
 F:/OOP/my_clion_project/cmake-build-debug/CMakeFiles/my_clion_project.dir
 F:/OOP/my_clion_project/cmake-build-debug/CMakeFiles/test_simulator.dir
+F:/OOP/my_clion_project/cmake-build-debug/CMakeFiles/test_pin_wiring.dir
+F:/OOP/my_clion_project/cmake-build-debug/CMakeFiles/test_mna_system.dir
 F:/OOP/my_clion_project/cmake-build-debug/CMakeFiles/edit_cache.dir
 F:/OOP/my_clion_project/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -173,11 +173,26 @@ CMakeFiles/my_clion_project.dir/GUI.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/GUI.cpp.s"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\GUI.cpp -o CMakeFiles\my_clion_project.dir\GUI.cpp.s
 
+CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
+CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
+CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.obj: F:/OOP/my_clion_project/GraphExtractor.cpp
+CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.obj"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.obj -MF CMakeFiles\my_clion_project.dir\GraphExtractor.cpp.obj.d -o CMakeFiles\my_clion_project.dir\GraphExtractor.cpp.obj -c F:\OOP\my_clion_project\GraphExtractor.cpp
+
+CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.i"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\OOP\my_clion_project\GraphExtractor.cpp > CMakeFiles\my_clion_project.dir\GraphExtractor.cpp.i
+
+CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.s"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\GraphExtractor.cpp -o CMakeFiles\my_clion_project.dir\GraphExtractor.cpp.s
+
 CMakeFiles/my_clion_project.dir/InputParser.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
 CMakeFiles/my_clion_project.dir/InputParser.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
 CMakeFiles/my_clion_project.dir/InputParser.cpp.obj: F:/OOP/my_clion_project/InputParser.cpp
 CMakeFiles/my_clion_project.dir/InputParser.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/my_clion_project.dir/InputParser.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/my_clion_project.dir/InputParser.cpp.obj"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/InputParser.cpp.obj -MF CMakeFiles\my_clion_project.dir\InputParser.cpp.obj.d -o CMakeFiles\my_clion_project.dir\InputParser.cpp.obj -c F:\OOP\my_clion_project\InputParser.cpp
 
 CMakeFiles/my_clion_project.dir/InputParser.cpp.i: cmake_force
@@ -192,7 +207,7 @@ CMakeFiles/my_clion_project.dir/Menu.cpp.obj: CMakeFiles/my_clion_project.dir/fl
 CMakeFiles/my_clion_project.dir/Menu.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
 CMakeFiles/my_clion_project.dir/Menu.cpp.obj: F:/OOP/my_clion_project/Menu.cpp
 CMakeFiles/my_clion_project.dir/Menu.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/my_clion_project.dir/Menu.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/my_clion_project.dir/Menu.cpp.obj"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/Menu.cpp.obj -MF CMakeFiles\my_clion_project.dir\Menu.cpp.obj.d -o CMakeFiles\my_clion_project.dir\Menu.cpp.obj -c F:\OOP\my_clion_project\Menu.cpp
 
 CMakeFiles/my_clion_project.dir/Menu.cpp.i: cmake_force
@@ -207,7 +222,7 @@ CMakeFiles/my_clion_project.dir/Node.cpp.obj: CMakeFiles/my_clion_project.dir/fl
 CMakeFiles/my_clion_project.dir/Node.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
 CMakeFiles/my_clion_project.dir/Node.cpp.obj: F:/OOP/my_clion_project/Node.cpp
 CMakeFiles/my_clion_project.dir/Node.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/my_clion_project.dir/Node.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/my_clion_project.dir/Node.cpp.obj"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/Node.cpp.obj -MF CMakeFiles\my_clion_project.dir\Node.cpp.obj.d -o CMakeFiles\my_clion_project.dir\Node.cpp.obj -c F:\OOP\my_clion_project\Node.cpp
 
 CMakeFiles/my_clion_project.dir/Node.cpp.i: cmake_force
@@ -218,11 +233,86 @@ CMakeFiles/my_clion_project.dir/Node.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/Node.cpp.s"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\Node.cpp -o CMakeFiles\my_clion_project.dir\Node.cpp.s
 
+CMakeFiles/my_clion_project.dir/Pin.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
+CMakeFiles/my_clion_project.dir/Pin.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
+CMakeFiles/my_clion_project.dir/Pin.cpp.obj: F:/OOP/my_clion_project/Pin.cpp
+CMakeFiles/my_clion_project.dir/Pin.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/my_clion_project.dir/Pin.cpp.obj"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/Pin.cpp.obj -MF CMakeFiles\my_clion_project.dir\Pin.cpp.obj.d -o CMakeFiles\my_clion_project.dir\Pin.cpp.obj -c F:\OOP\my_clion_project\Pin.cpp
+
+CMakeFiles/my_clion_project.dir/Pin.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/my_clion_project.dir/Pin.cpp.i"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\OOP\my_clion_project\Pin.cpp > CMakeFiles\my_clion_project.dir\Pin.cpp.i
+
+CMakeFiles/my_clion_project.dir/Pin.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/Pin.cpp.s"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\Pin.cpp -o CMakeFiles\my_clion_project.dir\Pin.cpp.s
+
+CMakeFiles/my_clion_project.dir/Plotter.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
+CMakeFiles/my_clion_project.dir/Plotter.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
+CMakeFiles/my_clion_project.dir/Plotter.cpp.obj: F:/OOP/my_clion_project/Plotter.cpp
+CMakeFiles/my_clion_project.dir/Plotter.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/my_clion_project.dir/Plotter.cpp.obj"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/Plotter.cpp.obj -MF CMakeFiles\my_clion_project.dir\Plotter.cpp.obj.d -o CMakeFiles\my_clion_project.dir\Plotter.cpp.obj -c F:\OOP\my_clion_project\Plotter.cpp
+
+CMakeFiles/my_clion_project.dir/Plotter.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/my_clion_project.dir/Plotter.cpp.i"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\OOP\my_clion_project\Plotter.cpp > CMakeFiles\my_clion_project.dir\Plotter.cpp.i
+
+CMakeFiles/my_clion_project.dir/Plotter.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/Plotter.cpp.s"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\Plotter.cpp -o CMakeFiles\my_clion_project.dir\Plotter.cpp.s
+
+CMakeFiles/my_clion_project.dir/PlotCursor.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
+CMakeFiles/my_clion_project.dir/PlotCursor.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
+CMakeFiles/my_clion_project.dir/PlotCursor.cpp.obj: F:/OOP/my_clion_project/PlotCursor.cpp
+CMakeFiles/my_clion_project.dir/PlotCursor.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/my_clion_project.dir/PlotCursor.cpp.obj"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/PlotCursor.cpp.obj -MF CMakeFiles\my_clion_project.dir\PlotCursor.cpp.obj.d -o CMakeFiles\my_clion_project.dir\PlotCursor.cpp.obj -c F:\OOP\my_clion_project\PlotCursor.cpp
+
+CMakeFiles/my_clion_project.dir/PlotCursor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/my_clion_project.dir/PlotCursor.cpp.i"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\OOP\my_clion_project\PlotCursor.cpp > CMakeFiles\my_clion_project.dir\PlotCursor.cpp.i
+
+CMakeFiles/my_clion_project.dir/PlotCursor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/PlotCursor.cpp.s"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\PlotCursor.cpp -o CMakeFiles\my_clion_project.dir\PlotCursor.cpp.s
+
+CMakeFiles/my_clion_project.dir/Probe.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
+CMakeFiles/my_clion_project.dir/Probe.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
+CMakeFiles/my_clion_project.dir/Probe.cpp.obj: F:/OOP/my_clion_project/Probe.cpp
+CMakeFiles/my_clion_project.dir/Probe.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/my_clion_project.dir/Probe.cpp.obj"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/Probe.cpp.obj -MF CMakeFiles\my_clion_project.dir\Probe.cpp.obj.d -o CMakeFiles\my_clion_project.dir\Probe.cpp.obj -c F:\OOP\my_clion_project\Probe.cpp
+
+CMakeFiles/my_clion_project.dir/Probe.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/my_clion_project.dir/Probe.cpp.i"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\OOP\my_clion_project\Probe.cpp > CMakeFiles\my_clion_project.dir\Probe.cpp.i
+
+CMakeFiles/my_clion_project.dir/Probe.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/Probe.cpp.s"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\Probe.cpp -o CMakeFiles\my_clion_project.dir\Probe.cpp.s
+
+CMakeFiles/my_clion_project.dir/ProbeManager.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
+CMakeFiles/my_clion_project.dir/ProbeManager.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
+CMakeFiles/my_clion_project.dir/ProbeManager.cpp.obj: F:/OOP/my_clion_project/ProbeManager.cpp
+CMakeFiles/my_clion_project.dir/ProbeManager.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/my_clion_project.dir/ProbeManager.cpp.obj"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/ProbeManager.cpp.obj -MF CMakeFiles\my_clion_project.dir\ProbeManager.cpp.obj.d -o CMakeFiles\my_clion_project.dir\ProbeManager.cpp.obj -c F:\OOP\my_clion_project\ProbeManager.cpp
+
+CMakeFiles/my_clion_project.dir/ProbeManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/my_clion_project.dir/ProbeManager.cpp.i"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\OOP\my_clion_project\ProbeManager.cpp > CMakeFiles\my_clion_project.dir\ProbeManager.cpp.i
+
+CMakeFiles/my_clion_project.dir/ProbeManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/ProbeManager.cpp.s"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\ProbeManager.cpp -o CMakeFiles\my_clion_project.dir\ProbeManager.cpp.s
+
 CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
 CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
 CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj: F:/OOP/my_clion_project/ProjectSerializer.cpp
 CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj -MF CMakeFiles\my_clion_project.dir\ProjectSerializer.cpp.obj.d -o CMakeFiles\my_clion_project.dir\ProjectSerializer.cpp.obj -c F:\OOP\my_clion_project\ProjectSerializer.cpp
 
 CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.i: cmake_force
@@ -233,11 +323,26 @@ CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.s"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\ProjectSerializer.cpp -o CMakeFiles\my_clion_project.dir\ProjectSerializer.cpp.s
 
+CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
+CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
+CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.obj: F:/OOP/my_clion_project/SignalProcessor.cpp
+CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.obj"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.obj -MF CMakeFiles\my_clion_project.dir\SignalProcessor.cpp.obj.d -o CMakeFiles\my_clion_project.dir\SignalProcessor.cpp.obj -c F:\OOP\my_clion_project\SignalProcessor.cpp
+
+CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.i"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\OOP\my_clion_project\SignalProcessor.cpp > CMakeFiles\my_clion_project.dir\SignalProcessor.cpp.i
+
+CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.s"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\SignalProcessor.cpp -o CMakeFiles\my_clion_project.dir\SignalProcessor.cpp.s
+
 CMakeFiles/my_clion_project.dir/Solvers.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
 CMakeFiles/my_clion_project.dir/Solvers.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
 CMakeFiles/my_clion_project.dir/Solvers.cpp.obj: F:/OOP/my_clion_project/Solvers.cpp
 CMakeFiles/my_clion_project.dir/Solvers.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/my_clion_project.dir/Solvers.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/my_clion_project.dir/Solvers.cpp.obj"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/Solvers.cpp.obj -MF CMakeFiles\my_clion_project.dir\Solvers.cpp.obj.d -o CMakeFiles\my_clion_project.dir\Solvers.cpp.obj -c F:\OOP\my_clion_project\Solvers.cpp
 
 CMakeFiles/my_clion_project.dir/Solvers.cpp.i: cmake_force
@@ -252,7 +357,7 @@ CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj: CMakeFiles/my_clion_project.d
 CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
 CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj: F:/OOP/my_clion_project/TcpSocket.cpp
 CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj -MF CMakeFiles\my_clion_project.dir\TcpSocket.cpp.obj.d -o CMakeFiles\my_clion_project.dir\TcpSocket.cpp.obj -c F:\OOP\my_clion_project\TcpSocket.cpp
 
 CMakeFiles/my_clion_project.dir/TcpSocket.cpp.i: cmake_force
@@ -263,6 +368,21 @@ CMakeFiles/my_clion_project.dir/TcpSocket.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/TcpSocket.cpp.s"
 	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\TcpSocket.cpp -o CMakeFiles\my_clion_project.dir\TcpSocket.cpp.s
 
+CMakeFiles/my_clion_project.dir/Wire.cpp.obj: CMakeFiles/my_clion_project.dir/flags.make
+CMakeFiles/my_clion_project.dir/Wire.cpp.obj: CMakeFiles/my_clion_project.dir/includes_CXX.rsp
+CMakeFiles/my_clion_project.dir/Wire.cpp.obj: F:/OOP/my_clion_project/Wire.cpp
+CMakeFiles/my_clion_project.dir/Wire.cpp.obj: CMakeFiles/my_clion_project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/my_clion_project.dir/Wire.cpp.obj"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_clion_project.dir/Wire.cpp.obj -MF CMakeFiles\my_clion_project.dir\Wire.cpp.obj.d -o CMakeFiles\my_clion_project.dir\Wire.cpp.obj -c F:\OOP\my_clion_project\Wire.cpp
+
+CMakeFiles/my_clion_project.dir/Wire.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/my_clion_project.dir/Wire.cpp.i"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\OOP\my_clion_project\Wire.cpp > CMakeFiles\my_clion_project.dir\Wire.cpp.i
+
+CMakeFiles/my_clion_project.dir/Wire.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/my_clion_project.dir/Wire.cpp.s"
+	"F:\OOP\CLion 2024.3.3\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\OOP\my_clion_project\Wire.cpp -o CMakeFiles\my_clion_project.dir\Wire.cpp.s
+
 # Object files for target my_clion_project
 my_clion_project_OBJECTS = \
 "CMakeFiles/my_clion_project.dir/main.cpp.obj" \
@@ -272,12 +392,20 @@ my_clion_project_OBJECTS = \
 "CMakeFiles/my_clion_project.dir/Element.cpp.obj" \
 "CMakeFiles/my_clion_project.dir/ErrorManager.cpp.obj" \
 "CMakeFiles/my_clion_project.dir/GUI.cpp.obj" \
+"CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.obj" \
 "CMakeFiles/my_clion_project.dir/InputParser.cpp.obj" \
 "CMakeFiles/my_clion_project.dir/Menu.cpp.obj" \
 "CMakeFiles/my_clion_project.dir/Node.cpp.obj" \
+"CMakeFiles/my_clion_project.dir/Pin.cpp.obj" \
+"CMakeFiles/my_clion_project.dir/Plotter.cpp.obj" \
+"CMakeFiles/my_clion_project.dir/PlotCursor.cpp.obj" \
+"CMakeFiles/my_clion_project.dir/Probe.cpp.obj" \
+"CMakeFiles/my_clion_project.dir/ProbeManager.cpp.obj" \
 "CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj" \
+"CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.obj" \
 "CMakeFiles/my_clion_project.dir/Solvers.cpp.obj" \
-"CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj"
+"CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj" \
+"CMakeFiles/my_clion_project.dir/Wire.cpp.obj"
 
 # External object files for target my_clion_project
 my_clion_project_EXTERNAL_OBJECTS =
@@ -289,12 +417,20 @@ my_clion_project.exe: CMakeFiles/my_clion_project.dir/Circuit.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/Element.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/ErrorManager.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/GUI.cpp.obj
+my_clion_project.exe: CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/InputParser.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/Menu.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/Node.cpp.obj
+my_clion_project.exe: CMakeFiles/my_clion_project.dir/Pin.cpp.obj
+my_clion_project.exe: CMakeFiles/my_clion_project.dir/Plotter.cpp.obj
+my_clion_project.exe: CMakeFiles/my_clion_project.dir/PlotCursor.cpp.obj
+my_clion_project.exe: CMakeFiles/my_clion_project.dir/Probe.cpp.obj
+my_clion_project.exe: CMakeFiles/my_clion_project.dir/ProbeManager.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.obj
+my_clion_project.exe: CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/Solvers.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/TcpSocket.cpp.obj
+my_clion_project.exe: CMakeFiles/my_clion_project.dir/Wire.cpp.obj
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/build.make
 my_clion_project.exe: F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/lib/libSDL2main.a
 my_clion_project.exe: F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/lib/libSDL2.dll.a
@@ -303,7 +439,7 @@ my_clion_project.exe: F:/OOP/my_clion_project/libs/SDL2_image-2.8.2/x86_64-w64-m
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/linkLibs.rsp
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/objects1.rsp
 my_clion_project.exe: CMakeFiles/my_clion_project.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable my_clion_project.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=F:\OOP\my_clion_project\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking CXX executable my_clion_project.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\my_clion_project.dir\link.txt --verbose=$(VERBOSE)
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold "Copying SDL2 DLLs..."
 	"F:\OOP\CLion 2024.3.3\bin\cmake\win\x64\bin\cmake.exe" -E copy_directory F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/bin F:/OOP/my_clion_project/cmake-build-debug

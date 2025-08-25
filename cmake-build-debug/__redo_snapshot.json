@@ -1,0 +1,20 @@
+{
+    "circuit_elements": [
+        {
+            "polymorphic_id": 2147483649,
+            "polymorphic_name": "Capacitor",
+            "ptr_wrapper": {
+                "valid": 1,
+                "data": {
+                    "value0": {
+                        "name": "C1",
+                        "node1_id": "N741",
+                        "node2_id": "N743"
+                    },
+                    "capacitance": 0.000001
+                }
+            }
+        }
+    ],
+    "ground_node": ""
+}

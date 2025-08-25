@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = @CMakeFiles/test_simulator.dir/includes_CXX.rsp
 
-CXX_FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+CXX_FLAGS =  -Wa,-mbig-obj -g -g1 -std=gnu++17 -fdiagnostics-color=always
 

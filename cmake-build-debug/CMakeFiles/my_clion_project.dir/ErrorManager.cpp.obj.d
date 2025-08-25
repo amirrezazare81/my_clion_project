@@ -142,4 +142,170 @@ CMakeFiles/my_clion_project.dir/ErrorManager.cpp.obj: \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/basic_ios.tcc \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/ostream.tcc \
  F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/istream \
- F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/istream.tcc
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/istream.tcc \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/fstream \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/codecvt.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32/bits/c++io.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/fstream.tcc \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_main.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_stdinc.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_platform.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/begin_code.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/close_code.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_config_windows.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/winsdkver.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/winapifamily.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/sdkddkver.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdarg.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/stdarg.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/_mingw_stdarg.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdint.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/stdint.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_assert.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_audio.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_error.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_endian.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_mutex.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_thread.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_rwops.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_clipboard.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_cpuinfo.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/setjmp.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/x86_64-w64-mingw32/include/psdk_inc/intrin-impl.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/x86intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/x86gprintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/ia32intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/adxintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/bmiintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/bmi2intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/cetintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/cldemoteintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/clflushoptintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/clwbintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/clzerointrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/cmpccxaddintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/enqcmdintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/fxsrintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/lzcntintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/lwpintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/movdirintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/mwaitintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/mwaitxintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/pconfigintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/popcntintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/pkuintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/prfchiintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/raointintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/rdseedintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/rtmintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/serializeintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/sgxintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/tbmintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/tsxldtrkintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/uintrintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/waitpkgintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/wbnoinvdintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/xsaveintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/xsavecintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/xsaveoptintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/xsavesintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/xtestintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/hresetintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/immintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/mmintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/xmmintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/emmintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/pmmintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/tmmintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/smmintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/wmmintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avxintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avxvnniintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avxifmaintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avxvnniint8intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx2intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512fintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512erintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512pfintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512cdintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vlintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512bwintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512dqintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vlbwintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vldqintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512ifmaintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512ifmavlintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vbmiintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vbmivlintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx5124fmapsintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx5124vnniwintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vpopcntdqintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vbmi2intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vbmi2vlintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vnniintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vnnivlintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vpopcntdqvlintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512bitalgintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vp2intersectintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512vp2intersectvlintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512fp16intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512fp16vlintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/shaintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/fmaintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/f16cintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/gfniintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/vaesintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/vpclmulqdqintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512bf16vlintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avx512bf16intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/avxneconvertintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/amxtileintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/amxint8intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/amxbf16intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/amxcomplexintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/prfchwintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/keylockerintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/amxfp16intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/mm3dnow.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/fma4intrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/ammintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/xopintrin.h \
+ F:/OOP/CLion\ 2024.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/cpuid.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_events.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_video.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_pixels.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_rect.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_surface.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_blendmode.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_keyboard.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_keycode.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_scancode.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_mouse.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_joystick.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_guid.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_gamecontroller.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_sensor.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_quit.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_gesture.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_touch.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_filesystem.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_haptic.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_hidapi.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_hints.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_loadso.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_log.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_messagebox.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_metal.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_power.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_render.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_shape.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_system.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_timer.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_version.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_locale.h \
+ F:/OOP/my_clion_project/libs/SDL2-2.32.2/x86_64-w64-mingw32/include/SDL2/SDL_misc.h

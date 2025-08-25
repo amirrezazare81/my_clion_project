@@ -9,12 +9,13 @@
 #include <stdexcept>
 #include <fstream>
 
-Circuit::Circuit() : ground_node_id("") {}
+Circuit::Circuit() : ground_node_id("") { LOG_INFO("[Circuit] constructed"); }
 Circuit::~Circuit() = default;
 
 Node* Circuit::getOrCreateNode(const std::string& node_id) {
     if (nodes.find(node_id) == nodes.end()) {
         nodes[node_id] = std::make_unique<Node>(node_id);
+        LOG_INFO(std::string("[Circuit] create node ") + node_id);
     }
     return nodes[node_id].get();
 }
@@ -24,6 +25,7 @@ void Circuit::addElement(std::unique_ptr<Element> element) {
     if (hasElement(element->getName())) {
         throw std::runtime_error("Element with name '" + element->getName() + "' already exists.");
     }
+    LOG_INFO(std::string("[Circuit] add element ") + element->getName() + " (" + element->getType() + ") " + element->getNode1Id() + "," + element->getNode2Id());
     getOrCreateNode(element->getNode1Id());
 
     if (element->getType() == "VoltageControlledVoltageSource" || element->getType() == "VoltageControlledCurrentSource") {
@@ -45,6 +47,7 @@ void Circuit::deleteElement(const std::string& name) {
     auto it = std::remove_if(elements.begin(), elements.end(),
         [&](const std::unique_ptr<Element>& elem) { return elem->getName() == name; });
     if (it != elements.end()) {
+        LOG_INFO(std::string("[Circuit] delete element ") + name);
         elements.erase(it, elements.end());
     } else {
         throw std::runtime_error("Element not found.");
@@ -52,6 +55,7 @@ void Circuit::deleteElement(const std::string& name) {
 }
 
 void Circuit::clear() {
+    LOG_WARN("[Circuit] clear all");
     elements.clear();
     nodes.clear();
     node_labels.clear();
@@ -61,6 +65,7 @@ void Circuit::clear() {
 void Circuit::setGroundNode(const std::string& node_id) {
     ground_node_id = node_id;
     getOrCreateNode(node_id)->setAsGround();
+    LOG_INFO(std::string("[Circuit] set ground ") + node_id);
 }
 
 std::string Circuit::getGroundNodeId() const { return ground_node_id; }
@@ -115,6 +120,7 @@ void Circuit::renameNode(const std::string& old_name, const std::string& new_nam
         if (elem->getNode1Id() == old_name) elem->setNode1Id(new_name);
         if (elem->getNode2Id() == old_name) elem->setNode2Id(new_name);
     }
+    LOG_INFO(std::string("[Circuit] rename node ") + old_name + " -> " + new_name);
 }
 
 bool Circuit::checkGroundNodeExists() const {

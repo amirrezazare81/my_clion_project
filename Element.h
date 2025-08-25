@@ -34,6 +34,7 @@ public:
     virtual ~Element() = default;
     virtual std::string getType() const = 0;
     virtual double getValue() const = 0;
+    virtual void setValue(double value) = 0;
     virtual std::string getAddCommandString() const = 0;
     virtual void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map,
                                  const std::map<std::string, double>& prev_node_voltages,
@@ -50,15 +51,16 @@ public:
     }
 };
 
-// --- Wire Class ---
-class Wire : public Element {
+// --- CircuitWire Class ---
+class CircuitWire : public Element {
 private:
     friend class cereal::access;
-    Wire(); // Default constructor for Cereal
+    CircuitWire(); // Default constructor for Cereal
 public:
-    Wire(const std::string& name, const std::string& node1, const std::string& node2);
+    CircuitWire(const std::string& name, const std::string& node1, const std::string& node2);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map,
                          const std::map<std::string, double>& prev_node_voltages,
@@ -80,6 +82,7 @@ public:
     Resistor(const std::string& name, const std::string& node1, const std::string& node2, double value);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
     template<class Archive>
@@ -96,6 +99,7 @@ public:
     Capacitor(const std::string& name, const std::string& node1, const std::string& node2, double value);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
     template<class Archive>
@@ -113,6 +117,7 @@ public:
     Inductor(const std::string& name, const std::string& node1, const std::string& node2, double value);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
     template<class Archive>
@@ -166,9 +171,23 @@ public:
     PulseVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, double V1_val, double V2_val, double TD_val, double TR_val, double TF_val, double PW_val, double PER_val);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     void setV1(double new_v1);
+    void setV2(double new_v2);
+    void setTd(double new_td);
+    void setTr(double new_tr);
+    void setTf(double new_tf);
+    void setPw(double new_pw);
+    void setPer(double new_per);
     std::string getAddCommandString() const override;
     double getVoltageAtTime(double current_time) const;
+    double getV1() const;
+    double getV2() const;
+    double getTd() const;
+    double getTr() const;
+    double getTf() const;
+    double getPw() const;
+    double getPer() const;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
     template<class Archive>
     void serialize(Archive& archive) {
@@ -187,6 +206,7 @@ public:
     SinusoidalVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, double offset, double amp, double freq);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     void setDCOffset(double new_offset);
     std::string getAddCommandString() const override;
     double getVoltageAtTime(double current_time) const;
@@ -194,6 +214,140 @@ public:
     template<class Archive>
     void serialize(Archive& archive) {
         archive(cereal::base_class<Element>(this), CEREAL_NVP(dc_offset), CEREAL_NVP(amplitude), CEREAL_NVP(frequency));
+    }
+};
+
+class ACVoltageSource : public Element {
+private:
+    double magnitude;
+    double phase;
+    double frequency;
+    friend class cereal::access;
+    ACVoltageSource(); // Default constructor for Cereal
+public:
+    ACVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, double mag, double ph, double freq);
+    std::string getType() const override;
+    double getValue() const override;
+    void setValue(double value) override;
+    void setMagnitude(double new_magnitude);
+    void setPhase(double new_phase);
+    void setFrequency(double new_frequency);
+    double getMagnitude() const;
+    double getPhase() const;
+    double getFrequency() const;
+    std::string getAddCommandString() const override;
+    std::complex<double> getComplexVoltage() const;
+    void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
+    template<class Archive>
+    void serialize(Archive& archive) {
+        archive(cereal::base_class<Element>(this), CEREAL_NVP(magnitude), CEREAL_NVP(phase), CEREAL_NVP(frequency));
+    }
+};
+
+
+
+class PulseCurrentSource : public Element {
+private:
+    double i1, i2;    // Initial and pulse current values  
+    double td, tr, tf, pw, per;  // Delay, rise time, fall time, pulse width, period
+    friend class cereal::access;
+    PulseCurrentSource(); // Default constructor for Cereal
+public:
+    PulseCurrentSource(const std::string& name, const std::string& node1, const std::string& node2, 
+                       double I1, double I2, double TD, double TR, double TF, double PW, double PER);
+    std::string getType() const override;
+    double getValue() const override;
+    void setValue(double value) override;
+    std::string getAddCommandString() const override;
+    double getCurrentAtTime(double time) const;
+    
+    // Getters for pulse parameters
+    double getI1() const { return i1; }
+    double getI2() const { return i2; }
+    double getTd() const { return td; }
+    double getTr() const { return tr; }
+    double getTf() const { return tf; }
+    double getPw() const { return pw; }
+    double getPer() const { return per; }
+    
+    // Setters for pulse parameters
+    void setI1(double val) { i1 = val; }
+    void setI2(double val) { i2 = val; }
+    void setTd(double val) { td = val; }
+    void setTr(double val) { tr = val; }
+    void setTf(double val) { tf = val; }
+    void setPw(double val) { pw = val; }
+    void setPer(double val) { per = val; }
+    
+    void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
+    
+    template<class Archive>
+    void serialize(Archive& archive) {
+        archive(cereal::base_class<Element>(this), CEREAL_NVP(i1), CEREAL_NVP(i2), CEREAL_NVP(td), CEREAL_NVP(tr), CEREAL_NVP(tf), CEREAL_NVP(pw), CEREAL_NVP(per));
+    }
+};
+
+class WaveformVoltageSource : public Element {
+private:
+    std::vector<double> voltage_values;  // Voltage values at each sample
+    double sampling_rate;                // Samples per second (Hz)
+    double signal_duration;              // Total duration of signal (s)
+    double start_time;                   // When the waveform starts (s)
+    bool repeat;                         // Whether to repeat the waveform
+    friend class cereal::access;
+    WaveformVoltageSource(); // Default constructor for Cereal
+public:
+    WaveformVoltageSource(const std::string& name, const std::string& node1, const std::string& node2,
+                          const std::vector<double>& values, double fs, double duration, double start_time = 0.0, bool repeat = false);
+    std::string getType() const override;
+    double getValue() const override;
+    void setValue(double value) override;
+    std::string getAddCommandString() const override;
+    double getVoltageAtTime(double time) const;
+    const std::vector<double>& getVoltageValues() const;
+    double getSamplingRate() const;
+    double getSignalDuration() const;
+    double getStartTime() const;
+    bool getRepeat() const;
+    void setVoltageValues(const std::vector<double>& values);
+    void setSamplingRate(double fs);
+    void setSignalDuration(double duration);
+    void setStartTime(double start_time);
+    void setRepeat(bool repeat);
+    void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double currentTime) override;
+    template<class Archive>
+    void serialize(Archive& archive) {
+        archive(cereal::base_class<Element>(this), CEREAL_NVP(voltage_values), CEREAL_NVP(sampling_rate), 
+                CEREAL_NVP(signal_duration), CEREAL_NVP(start_time), CEREAL_NVP(repeat));
+    }
+};
+
+class PhaseVoltageSource : public Element {
+private:
+    double magnitude;      // Voltage magnitude (V)
+    double base_frequency; // Base frequency omega_base (rad/s)
+    double phase;          // Phase phi (radians)
+    friend class cereal::access;
+    PhaseVoltageSource(); // Default constructor for Cereal
+public:
+    PhaseVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, 
+                       double magnitude, double base_frequency, double phase);
+    std::string getType() const override;
+    double getValue() const override;
+    void setValue(double value) override;
+    std::string getAddCommandString() const override;
+    double getVoltageAtTime(double time) const;
+    double getMagnitude() const;
+    double getBaseFrequency() const;
+    double getPhase() const;
+    void setMagnitude(double mag);
+    void setBaseFrequency(double freq);
+    void setPhase(double ph);
+    std::complex<double> getComplexVoltage() const;
+    void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double currentTime) override;
+    template<class Archive>
+    void serialize(Archive& archive) {
+        archive(cereal::base_class<Element>(this), CEREAL_NVP(magnitude), CEREAL_NVP(base_frequency), CEREAL_NVP(phase));
     }
 };
 
@@ -208,6 +362,7 @@ public:
     VoltageControlledVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, const std::string& ctrl_node1, const std::string& ctrl_node2, double g);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     std::string getControlNode1Id() const;
     std::string getControlNode2Id() const;
@@ -230,6 +385,7 @@ public:
     VoltageControlledCurrentSource(const std::string& name, const std::string& node1, const std::string& node2, const std::string& ctrl_node1, const std::string& ctrl_node2, double g);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     std::string getControlNode1Id() const;
     std::string getControlNode2Id() const;
@@ -251,6 +407,7 @@ public:
     CurrentControlledCurrentSource(const std::string& name, const std::string& node1, const std::string& node2, const std::string& ctrl_branch, double g);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     std::string getControllingBranchName() const;
     double getGain() const;
@@ -271,6 +428,7 @@ public:
     CurrentControlledVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, const std::string& ctrl_branch, double r);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     std::string getControllingBranchName() const;
     double getTransresistance() const;
@@ -294,6 +452,7 @@ public:
     Diode(const std::string& name, const std::string& node1, const std::string& node2, const std::string& model);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
     template<class Archive>
@@ -310,6 +469,7 @@ public:
     Ground(const std::string& name, const std::string& node_id);
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
     template<class Archive>
@@ -330,6 +490,7 @@ public:
     ~Subcircuit();
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& main_node_map, const std::map<std::string, double>&, bool, double) override;
     template<class Archive>
@@ -352,6 +513,7 @@ public:
     ~WirelessVoltageSource();
     std::string getType() const override;
     double getValue() const override;
+    void setValue(double value) override;
     std::string getAddCommandString() const override;
     void contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) override;
     template<class Archive>

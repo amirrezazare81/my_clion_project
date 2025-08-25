@@ -141,6 +141,32 @@ test_simulator/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_simulator.dir\build.make CMakeFiles/test_simulator.dir/build
 .PHONY : test_simulator/fast
 
+#=============================================================================
+# Target rules for targets named test_pin_wiring
+
+# Build rule for target.
+test_pin_wiring: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test_pin_wiring
+.PHONY : test_pin_wiring
+
+# fast build rule for target.
+test_pin_wiring/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_pin_wiring.dir\build.make CMakeFiles/test_pin_wiring.dir/build
+.PHONY : test_pin_wiring/fast
+
+#=============================================================================
+# Target rules for targets named test_mna_system
+
+# Build rule for target.
+test_mna_system: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test_mna_system
+.PHONY : test_mna_system
+
+# fast build rule for target.
+test_mna_system/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_mna_system.dir\build.make CMakeFiles/test_mna_system.dir/build
+.PHONY : test_mna_system/fast
+
 Analyzers.obj: Analyzers.cpp.obj
 .PHONY : Analyzers.obj
 
@@ -285,6 +311,30 @@ GUI.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/GUI.cpp.s
 .PHONY : GUI.cpp.s
 
+GraphExtractor.obj: GraphExtractor.cpp.obj
+.PHONY : GraphExtractor.obj
+
+# target to build an object file
+GraphExtractor.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.obj
+.PHONY : GraphExtractor.cpp.obj
+
+GraphExtractor.i: GraphExtractor.cpp.i
+.PHONY : GraphExtractor.i
+
+# target to preprocess a source file
+GraphExtractor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.i
+.PHONY : GraphExtractor.cpp.i
+
+GraphExtractor.s: GraphExtractor.cpp.s
+.PHONY : GraphExtractor.s
+
+# target to generate assembly for a file
+GraphExtractor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/GraphExtractor.cpp.s
+.PHONY : GraphExtractor.cpp.s
+
 InputParser.obj: InputParser.cpp.obj
 .PHONY : InputParser.obj
 
@@ -357,6 +407,126 @@ Node.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Node.cpp.s
 .PHONY : Node.cpp.s
 
+Pin.obj: Pin.cpp.obj
+.PHONY : Pin.obj
+
+# target to build an object file
+Pin.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Pin.cpp.obj
+.PHONY : Pin.cpp.obj
+
+Pin.i: Pin.cpp.i
+.PHONY : Pin.i
+
+# target to preprocess a source file
+Pin.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Pin.cpp.i
+.PHONY : Pin.cpp.i
+
+Pin.s: Pin.cpp.s
+.PHONY : Pin.s
+
+# target to generate assembly for a file
+Pin.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Pin.cpp.s
+.PHONY : Pin.cpp.s
+
+PlotCursor.obj: PlotCursor.cpp.obj
+.PHONY : PlotCursor.obj
+
+# target to build an object file
+PlotCursor.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/PlotCursor.cpp.obj
+.PHONY : PlotCursor.cpp.obj
+
+PlotCursor.i: PlotCursor.cpp.i
+.PHONY : PlotCursor.i
+
+# target to preprocess a source file
+PlotCursor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/PlotCursor.cpp.i
+.PHONY : PlotCursor.cpp.i
+
+PlotCursor.s: PlotCursor.cpp.s
+.PHONY : PlotCursor.s
+
+# target to generate assembly for a file
+PlotCursor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/PlotCursor.cpp.s
+.PHONY : PlotCursor.cpp.s
+
+Plotter.obj: Plotter.cpp.obj
+.PHONY : Plotter.obj
+
+# target to build an object file
+Plotter.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Plotter.cpp.obj
+.PHONY : Plotter.cpp.obj
+
+Plotter.i: Plotter.cpp.i
+.PHONY : Plotter.i
+
+# target to preprocess a source file
+Plotter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Plotter.cpp.i
+.PHONY : Plotter.cpp.i
+
+Plotter.s: Plotter.cpp.s
+.PHONY : Plotter.s
+
+# target to generate assembly for a file
+Plotter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Plotter.cpp.s
+.PHONY : Plotter.cpp.s
+
+Probe.obj: Probe.cpp.obj
+.PHONY : Probe.obj
+
+# target to build an object file
+Probe.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Probe.cpp.obj
+.PHONY : Probe.cpp.obj
+
+Probe.i: Probe.cpp.i
+.PHONY : Probe.i
+
+# target to preprocess a source file
+Probe.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Probe.cpp.i
+.PHONY : Probe.cpp.i
+
+Probe.s: Probe.cpp.s
+.PHONY : Probe.s
+
+# target to generate assembly for a file
+Probe.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Probe.cpp.s
+.PHONY : Probe.cpp.s
+
+ProbeManager.obj: ProbeManager.cpp.obj
+.PHONY : ProbeManager.obj
+
+# target to build an object file
+ProbeManager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/ProbeManager.cpp.obj
+.PHONY : ProbeManager.cpp.obj
+
+ProbeManager.i: ProbeManager.cpp.i
+.PHONY : ProbeManager.i
+
+# target to preprocess a source file
+ProbeManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/ProbeManager.cpp.i
+.PHONY : ProbeManager.cpp.i
+
+ProbeManager.s: ProbeManager.cpp.s
+.PHONY : ProbeManager.s
+
+# target to generate assembly for a file
+ProbeManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/ProbeManager.cpp.s
+.PHONY : ProbeManager.cpp.s
+
 ProjectSerializer.obj: ProjectSerializer.cpp.obj
 .PHONY : ProjectSerializer.obj
 
@@ -380,6 +550,30 @@ ProjectSerializer.s: ProjectSerializer.cpp.s
 ProjectSerializer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/ProjectSerializer.cpp.s
 .PHONY : ProjectSerializer.cpp.s
+
+SignalProcessor.obj: SignalProcessor.cpp.obj
+.PHONY : SignalProcessor.obj
+
+# target to build an object file
+SignalProcessor.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.obj
+.PHONY : SignalProcessor.cpp.obj
+
+SignalProcessor.i: SignalProcessor.cpp.i
+.PHONY : SignalProcessor.i
+
+# target to preprocess a source file
+SignalProcessor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.i
+.PHONY : SignalProcessor.cpp.i
+
+SignalProcessor.s: SignalProcessor.cpp.s
+.PHONY : SignalProcessor.s
+
+# target to generate assembly for a file
+SignalProcessor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/SignalProcessor.cpp.s
+.PHONY : SignalProcessor.cpp.s
 
 Solvers.obj: Solvers.cpp.obj
 .PHONY : Solvers.obj
@@ -429,6 +623,30 @@ TcpSocket.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/TcpSocket.cpp.s
 .PHONY : TcpSocket.cpp.s
 
+Wire.obj: Wire.cpp.obj
+.PHONY : Wire.obj
+
+# target to build an object file
+Wire.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Wire.cpp.obj
+.PHONY : Wire.cpp.obj
+
+Wire.i: Wire.cpp.i
+.PHONY : Wire.i
+
+# target to preprocess a source file
+Wire.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Wire.cpp.i
+.PHONY : Wire.cpp.i
+
+Wire.s: Wire.cpp.s
+.PHONY : Wire.s
+
+# target to generate assembly for a file
+Wire.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/Wire.cpp.s
+.PHONY : Wire.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -452,6 +670,54 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\my_clion_project.dir\build.make CMakeFiles/my_clion_project.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+test_mna_system.obj: test_mna_system.cpp.obj
+.PHONY : test_mna_system.obj
+
+# target to build an object file
+test_mna_system.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_mna_system.dir\build.make CMakeFiles/test_mna_system.dir/test_mna_system.cpp.obj
+.PHONY : test_mna_system.cpp.obj
+
+test_mna_system.i: test_mna_system.cpp.i
+.PHONY : test_mna_system.i
+
+# target to preprocess a source file
+test_mna_system.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_mna_system.dir\build.make CMakeFiles/test_mna_system.dir/test_mna_system.cpp.i
+.PHONY : test_mna_system.cpp.i
+
+test_mna_system.s: test_mna_system.cpp.s
+.PHONY : test_mna_system.s
+
+# target to generate assembly for a file
+test_mna_system.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_mna_system.dir\build.make CMakeFiles/test_mna_system.dir/test_mna_system.cpp.s
+.PHONY : test_mna_system.cpp.s
+
+test_pin_wiring.obj: test_pin_wiring.cpp.obj
+.PHONY : test_pin_wiring.obj
+
+# target to build an object file
+test_pin_wiring.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_pin_wiring.dir\build.make CMakeFiles/test_pin_wiring.dir/test_pin_wiring.cpp.obj
+.PHONY : test_pin_wiring.cpp.obj
+
+test_pin_wiring.i: test_pin_wiring.cpp.i
+.PHONY : test_pin_wiring.i
+
+# target to preprocess a source file
+test_pin_wiring.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_pin_wiring.dir\build.make CMakeFiles/test_pin_wiring.dir/test_pin_wiring.cpp.i
+.PHONY : test_pin_wiring.cpp.i
+
+test_pin_wiring.s: test_pin_wiring.cpp.s
+.PHONY : test_pin_wiring.s
+
+# target to generate assembly for a file
+test_pin_wiring.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test_pin_wiring.dir\build.make CMakeFiles/test_pin_wiring.dir/test_pin_wiring.cpp.s
+.PHONY : test_pin_wiring.cpp.s
 
 test_simulator.obj: test_simulator.cpp.obj
 .PHONY : test_simulator.obj
@@ -486,6 +752,8 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... my_clion_project
+	@echo ... test_mna_system
+	@echo ... test_pin_wiring
 	@echo ... test_simulator
 	@echo ... Analyzers.obj
 	@echo ... Analyzers.i
@@ -505,6 +773,9 @@ help:
 	@echo ... GUI.obj
 	@echo ... GUI.i
 	@echo ... GUI.s
+	@echo ... GraphExtractor.obj
+	@echo ... GraphExtractor.i
+	@echo ... GraphExtractor.s
 	@echo ... InputParser.obj
 	@echo ... InputParser.i
 	@echo ... InputParser.s
@@ -514,18 +785,45 @@ help:
 	@echo ... Node.obj
 	@echo ... Node.i
 	@echo ... Node.s
+	@echo ... Pin.obj
+	@echo ... Pin.i
+	@echo ... Pin.s
+	@echo ... PlotCursor.obj
+	@echo ... PlotCursor.i
+	@echo ... PlotCursor.s
+	@echo ... Plotter.obj
+	@echo ... Plotter.i
+	@echo ... Plotter.s
+	@echo ... Probe.obj
+	@echo ... Probe.i
+	@echo ... Probe.s
+	@echo ... ProbeManager.obj
+	@echo ... ProbeManager.i
+	@echo ... ProbeManager.s
 	@echo ... ProjectSerializer.obj
 	@echo ... ProjectSerializer.i
 	@echo ... ProjectSerializer.s
+	@echo ... SignalProcessor.obj
+	@echo ... SignalProcessor.i
+	@echo ... SignalProcessor.s
 	@echo ... Solvers.obj
 	@echo ... Solvers.i
 	@echo ... Solvers.s
 	@echo ... TcpSocket.obj
 	@echo ... TcpSocket.i
 	@echo ... TcpSocket.s
+	@echo ... Wire.obj
+	@echo ... Wire.i
+	@echo ... Wire.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... test_mna_system.obj
+	@echo ... test_mna_system.i
+	@echo ... test_mna_system.s
+	@echo ... test_pin_wiring.obj
+	@echo ... test_pin_wiring.i
+	@echo ... test_pin_wiring.s
 	@echo ... test_simulator.obj
 	@echo ... test_simulator.i
 	@echo ... test_simulator.s

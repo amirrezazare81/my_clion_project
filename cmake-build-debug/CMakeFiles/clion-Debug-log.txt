@@ -1,4 +1,4 @@
 "F:\OOP\CLion 2024.3.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" -S F:\OOP\my_clion_project -B F:\OOP\my_clion_project\cmake-build-debug
--- Configuring done (0.3s)
+-- Configuring done (0.2s)
 -- Generating done (0.1s)
 -- Build files have been written to: F:/OOP/my_clion_project/cmake-build-debug

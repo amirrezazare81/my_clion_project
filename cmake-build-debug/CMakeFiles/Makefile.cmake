@@ -59,4 +59,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/my_clion_project.dir/DependInfo.cmake"
   "CMakeFiles/test_simulator.dir/DependInfo.cmake"
+  "CMakeFiles/test_pin_wiring.dir/DependInfo.cmake"
+  "CMakeFiles/test_mna_system.dir/DependInfo.cmake"
   )

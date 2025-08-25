@@ -25,17 +25,18 @@ void Element::setNode1Id(const std::string& new_id) { node1_id = new_id; }
 void Element::setNode2Id(const std::string& new_id) { node2_id = new_id; }
 
 // --- Wire Implementation ---
-Wire::Wire() : Element() {}
+CircuitWire::CircuitWire() : Element() {}
 
-Wire::Wire(const std::string& name, const std::string& node1, const std::string& node2)
+CircuitWire::CircuitWire(const std::string& name, const std::string& node1, const std::string& node2)
     : Element(name, node1, node2) {}
 
-std::string Wire::getType() const { return "Wire"; }
-double Wire::getValue() const { return 0.0; }
-std::string Wire::getAddCommandString() const {
+std::string CircuitWire::getType() const { return "Wire"; }
+double CircuitWire::getValue() const { return 0.0; }
+void CircuitWire::setValue(double value) { /* Wires don't have values */ }
+std::string CircuitWire::getAddCommandString() const {
     return "* wire " + getName() + " " + getNode1Id() + " " + getNode2Id();
 }
-void Wire::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map,
+void CircuitWire::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map,
                            const std::map<std::string, double>& prev_node_voltages,
                            bool is_transient, double timestep) {
     // Wires are handled by node connections and do not contribute directly to the matrix.
@@ -49,6 +50,7 @@ Resistor::Resistor(const std::string& name, const std::string& node1, const std:
 
 std::string Resistor::getType() const { return "Resistor"; }
 double Resistor::getValue() const { return resistance; }
+void Resistor::setValue(double value) { resistance = value; }
 std::string Resistor::getAddCommandString() const {
     return "R " + name + " " + node1_id + " " + node2_id + " " + std::to_string(resistance);
 }
@@ -74,33 +76,48 @@ Capacitor::Capacitor(const std::string& name, const std::string& node1, const st
 
 std::string Capacitor::getType() const { return "Capacitor"; }
 double Capacitor::getValue() const { return capacitance; }
+void Capacitor::setValue(double value) { capacitance = value; }
 std::string Capacitor::getAddCommandString() const {
     return "C " + name + " " + node1_id + " " + node2_id + " " + std::to_string(capacitance);
 }
 
 void Capacitor::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>& prev_voltages, bool is_transient, double timestep) {
-    if (!is_transient || timestep <= 0) return;
+    if (!is_transient || timestep <= 0) {
+        // For DC analysis, capacitor acts as open circuit (no contribution)
+        return;
+    }
 
     int n1 = node_map.count(node1_id) ? node_map.at(node1_id) : -1;
     int n2 = node_map.count(node2_id) ? node_map.at(node2_id) : -1;
 
     if (n1 != -1 && n2 != -1) {
-        if (is_transient && timestep > 0) {
-            // For transient analysis, use backward Euler
-            double conductance = capacitance / timestep;
-            G[n1][n1] += conductance;
-            G[n2][n2] += conductance;
-            G[n1][n2] -= conductance;
-            G[n2][n1] -= conductance;
+        // For transient analysis, use backward Euler: C*dV/dt = I
+        // Discretized: C*(V[n] - V[n-1])/dt = I[n]
+        // Rearranged: C/dt * V[n] = I[n] + C/dt * V[n-1]
+        double conductance = capacitance / timestep;
+        
+        // Add conductance matrix contributions
+        G[n1][n1] += conductance;
+        G[n2][n2] += conductance;
+        G[n1][n2] -= conductance;
+        G[n2][n1] -= conductance;
 
-            // Add current source term from previous timestep
-            double v1_prev = prev_voltages.count(node1_id) ? prev_voltages.at(node1_id) : 0.0;
-            double v2_prev = prev_voltages.count(node2_id) ? prev_voltages.at(node2_id) : 0.0;
-            double i_prev = conductance * (v1_prev - v2_prev);
-            if (n1 != -1) J[n1] += i_prev;
-            if (n2 != -1) J[n2] -= i_prev;
+        // Add current source from previous voltage step
+        double v1_prev = prev_voltages.count(node1_id) ? prev_voltages.at(node1_id) : 0.0;
+        double v2_prev = prev_voltages.count(node2_id) ? prev_voltages.at(node2_id) : 0.0;
+        double i_history = conductance * (v1_prev - v2_prev);
+        
+        if (n1 != -1) J[n1] += i_history;
+        if (n2 != -1) J[n2] -= i_history;
+        
+        // Debug logging for capacitor behavior
+        static int log_count = 0;
+        if (log_count < 5) { // Log only first few steps
+            std::cout << "[CAP " << name << "] timestep=" << timestep << ", C=" << capacitance 
+                      << ", G=" << conductance << ", V_prev=(" << v1_prev << "," << v2_prev 
+                      << "), I_hist=" << i_history << std::endl;
+            log_count++;
         }
-        // For DC analysis, capacitor acts as an open circuit (no contribution)
     }
 }
 
@@ -112,6 +129,7 @@ Inductor::Inductor(const std::string& name, const std::string& node1, const std:
 
 std::string Inductor::getType() const { return "Inductor"; }
 double Inductor::getValue() const { return inductance; }
+void Inductor::setValue(double value) { inductance = value; }
 std::string Inductor::getAddCommandString() const {
     return "L " + name + " " + node1_id + " " + node2_id + " " + std::to_string(inductance);
 }
@@ -184,36 +202,66 @@ void IndependentCurrentSource::contributeToMNA(Matrix& G, Vector& J, int num_nod
 }
 
 // --- Pulse Voltage Source Implementation ---
-PulseVoltageSource::PulseVoltageSource() : Element(), v1_val(0.0), v2_val(0.0), td_val(0.0), tr_val(0.0), tf_val(0.0), pw_val(0.0), per_val(0.0) {}
+PulseVoltageSource::PulseVoltageSource() : Element(), v1_val(0.0), v2_val(5.0), td_val(1e-3), tr_val(1e-4), tf_val(1e-4), pw_val(3e-3), per_val(8e-3) {}
 
 PulseVoltageSource::PulseVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, double V1_val, double V2_val, double TD_val, double TR_val, double TF_val, double PW_val, double PER_val)
     : Element(name, node1, node2), v1_val(V1_val), v2_val(V2_val), td_val(TD_val), tr_val(TR_val), tf_val(TF_val), pw_val(PW_val), per_val(PER_val) {}
 std::string PulseVoltageSource::getType() const { return "PulseVoltageSource"; }
 double PulseVoltageSource::getValue() const { return v1_val; }
+void PulseVoltageSource::setValue(double value) { v1_val = value; }
 void PulseVoltageSource::setV1(double new_v1) { v1_val = new_v1; }
 std::string PulseVoltageSource::getAddCommandString() const {
     return "Vpulse " + name + " " + node1_id + " " + node2_id + " " + std::to_string(v1_val) + " " + std::to_string(v2_val) + " " + std::to_string(td_val) + " " + std::to_string(tr_val) + " " + std::to_string(tf_val) + " " + std::to_string(pw_val) + " " + std::to_string(per_val);
 }
 
 double PulseVoltageSource::getVoltageAtTime(double current_time) const {
-    if (current_time < td_val) return v1_val;
+    if (current_time < td_val) {
+        return v1_val;
+    }
     
     double t_cycle = fmod(current_time - td_val, per_val);
+    double voltage;
+    
     if (t_cycle < tr_val) {
         // Rising edge
-        return v1_val + (v2_val - v1_val) * (t_cycle / tr_val);
+        voltage = v1_val + (v2_val - v1_val) * (t_cycle / tr_val);
     } else if (t_cycle < tr_val + pw_val) {
         // High level
-        return v2_val;
+        voltage = v2_val;
     } else if (t_cycle < tr_val + pw_val + tf_val) {
         // Falling edge
         double t_fall = t_cycle - tr_val - pw_val;
-        return v2_val + (v1_val - v2_val) * (t_fall / tf_val);
+        voltage = v2_val + (v1_val - v2_val) * (t_fall / tf_val);
     } else {
         // Low level
-        return v1_val;
+        voltage = v1_val;
     }
+    
+    // Debug output every 100 time steps to avoid spam
+    static int debug_counter = 0;
+    if (debug_counter % 100 == 0) {
+        std::cout << "[PULSE] t=" << current_time << "s, t_cycle=" << t_cycle << "s, V=" << voltage << "V (V1=" << v1_val << ", V2=" << v2_val << ", td=" << td_val << ", per=" << per_val << ")" << std::endl;
+    }
+    debug_counter++;
+    
+    return voltage;
 }
+
+double PulseVoltageSource::getV1() const { return v1_val; }
+double PulseVoltageSource::getV2() const { return v2_val; }
+double PulseVoltageSource::getTd() const { return td_val; }
+double PulseVoltageSource::getTr() const { return tr_val; }
+double PulseVoltageSource::getTf() const { return tf_val; }
+double PulseVoltageSource::getPw() const { return pw_val; }
+double PulseVoltageSource::getPer() const { return per_val; }
+
+void PulseVoltageSource::setV2(double new_v2) { v2_val = new_v2; }
+void PulseVoltageSource::setTd(double new_td) { td_val = new_td; }
+void PulseVoltageSource::setTr(double new_tr) { tr_val = new_tr; }
+void PulseVoltageSource::setTf(double new_tf) { tf_val = new_tf; }
+void PulseVoltageSource::setPw(double new_pw) { pw_val = new_pw; }
+void PulseVoltageSource::setPer(double new_per) { per_val = new_per; }
+
 void PulseVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) {
     // For time-dependent voltage sources, we need to add a current variable to the MNA matrix
     // This is handled in MNAMatrix::build by adding extra rows/columns
@@ -233,6 +281,7 @@ SinusoidalVoltageSource::SinusoidalVoltageSource(const std::string& name, const 
 
 std::string SinusoidalVoltageSource::getType() const { return "SinusoidalVoltageSource"; }
 double SinusoidalVoltageSource::getValue() const { return dc_offset; }
+void SinusoidalVoltageSource::setValue(double value) { dc_offset = value; }
 void SinusoidalVoltageSource::setDCOffset(double new_offset) { dc_offset = new_offset; }
 std::string SinusoidalVoltageSource::getAddCommandString() const {
     return "Vsin " + name + " " + node1_id + " " + node2_id + " " + std::to_string(dc_offset) + " " + std::to_string(amplitude) + " " + std::to_string(frequency);
@@ -254,6 +303,236 @@ void SinusoidalVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_node
     }
 }
 
+// --- AC Voltage Source Implementation ---
+ACVoltageSource::ACVoltageSource() : Element(), magnitude(1.0), phase(0.0), frequency(1000.0) {}
+
+ACVoltageSource::ACVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, double mag, double ph, double freq)
+    : Element(name, node1, node2), magnitude(mag), phase(ph), frequency(freq) {}
+
+std::string ACVoltageSource::getType() const { return "ACVoltageSource"; }
+double ACVoltageSource::getValue() const { return magnitude; }
+void ACVoltageSource::setValue(double value) { magnitude = value; }
+void ACVoltageSource::setMagnitude(double new_magnitude) { magnitude = new_magnitude; }
+void ACVoltageSource::setPhase(double new_phase) { phase = new_phase; }
+void ACVoltageSource::setFrequency(double new_frequency) { frequency = new_frequency; }
+double ACVoltageSource::getMagnitude() const { return magnitude; }
+double ACVoltageSource::getPhase() const { return phase; }
+double ACVoltageSource::getFrequency() const { return frequency; }
+
+std::string ACVoltageSource::getAddCommandString() const {
+    return "VAC " + name + " " + node1_id + " " + node2_id + " AC " + std::to_string(magnitude) + " " + std::to_string(phase);
+}
+
+std::complex<double> ACVoltageSource::getComplexVoltage() const {
+    double phase_rad = phase * M_PI / 180.0; // Convert degrees to radians
+    return std::complex<double>(magnitude * cos(phase_rad), magnitude * sin(phase_rad));
+}
+
+void ACVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool, double) {
+    // For AC voltage sources, the contribution is handled in ComplexMNAMatrix::build
+    int n1 = node_map.count(node1_id) ? node_map.at(node1_id) : -1;
+    int n2 = node_map.count(node2_id) ? node_map.at(node2_id) : -1;
+
+    if (n1 != -1 && n2 != -1) {
+        // The voltage difference constraint will be handled in ComplexMNAMatrix::build
+    }
+}
+
+
+
+// --- Pulse Current Source Implementation ---
+PulseCurrentSource::PulseCurrentSource() : Element(), i1(0.0), i2(1e-3), td(1e-3), tr(1e-4), tf(1e-4), pw(2e-3), per(5e-3) {}
+
+PulseCurrentSource::PulseCurrentSource(const std::string& name, const std::string& node1, const std::string& node2, 
+                                       double I1, double I2, double TD, double TR, double TF, double PW, double PER)
+    : Element(name, node1, node2), i1(I1), i2(I2), td(TD), tr(TR), tf(TF), pw(PW), per(PER) {}
+
+std::string PulseCurrentSource::getType() const { return "PulseCurrentSource"; }
+double PulseCurrentSource::getValue() const { return i2; } // Return pulse amplitude
+void PulseCurrentSource::setValue(double value) { i2 = value; }
+
+std::string PulseCurrentSource::getAddCommandString() const {
+    return "IPULSE " + name + " " + node1_id + " " + node2_id + " " + 
+           std::to_string(i1) + " " + std::to_string(i2) + " " + std::to_string(td) + " " + 
+           std::to_string(tr) + " " + std::to_string(tf) + " " + std::to_string(pw) + " " + std::to_string(per);
+}
+
+double PulseCurrentSource::getCurrentAtTime(double current_time) const {
+    if (per <= 0) return i1; // If no period set, stay at initial value
+    
+    // Calculate time within the current period
+    double t_period = fmod(current_time, per);
+    
+    if (t_period < td) {
+        // Before delay time - initial value
+        return i1;
+    } else if (t_period < td + tr) {
+        // Rise time - linear interpolation
+        double t_rise = (t_period - td) / tr;
+        return i1 + (i2 - i1) * t_rise;
+    } else if (t_period < td + tr + pw) {
+        // Pulse width - constant pulse value
+        return i2;
+    } else if (t_period < td + tr + pw + tf) {
+        // Fall time - linear interpolation
+        double t_fall = (t_period - td - tr - pw) / tf;
+        return i2 + (i1 - i2) * t_fall;
+    } else {
+        // After pulse - back to initial value
+        return i1;
+    }
+}
+
+void PulseCurrentSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool is_transient, double currentTime) {
+    int n1 = node_map.count(node1_id) ? node_map.at(node1_id) : -1;
+    int n2 = node_map.count(node2_id) ? node_map.at(node2_id) : -1;
+
+    double current_value = is_transient ? getCurrentAtTime(currentTime) : i1; // Use initial value for DC
+    
+    if (n1 != -1) J[n1] -= current_value;
+    if (n2 != -1) J[n2] += current_value;
+}
+
+// --- Waveform Voltage Source Implementation ---
+
+// --- Waveform Voltage Source Implementation ---
+WaveformVoltageSource::WaveformVoltageSource() : Element(), sampling_rate(1000.0), signal_duration(1.0), start_time(0.0), repeat(false) {}
+
+WaveformVoltageSource::WaveformVoltageSource(const std::string& name, const std::string& node1, const std::string& node2,
+                                             const std::vector<double>& values, double fs, double duration, double start_time, bool repeat)
+    : Element(name, node1, node2), voltage_values(values), sampling_rate(fs), signal_duration(duration), start_time(start_time), repeat(repeat) {}
+
+std::string WaveformVoltageSource::getType() const { return "WaveformVoltageSource"; }
+double WaveformVoltageSource::getValue() const { 
+    return voltage_values.empty() ? 0.0 : voltage_values[0]; 
+}
+void WaveformVoltageSource::setValue(double value) { 
+    if (!voltage_values.empty()) voltage_values[0] = value; 
+}
+
+std::string WaveformVoltageSource::getAddCommandString() const {
+    std::stringstream ss;
+    ss << "VWAVEFORM " << name << " " << node1_id << " " << node2_id << " " 
+       << sampling_rate << " " << signal_duration << " " << start_time << " " << (repeat ? 1 : 0) << " [";
+    for (size_t i = 0; i < voltage_values.size(); ++i) {
+        if (i > 0) ss << ",";
+        ss << voltage_values[i];
+    }
+    ss << "]";
+    return ss.str();
+}
+
+double WaveformVoltageSource::getVoltageAtTime(double time) const {
+    if (voltage_values.empty()) return 0.0;
+    
+    // Check if we're before the start time
+    if (time < start_time) return 0.0;
+    
+    double relative_time = time - start_time;
+    
+    // Handle repetition
+    if (repeat && signal_duration > 0.0) {
+        relative_time = fmod(relative_time, signal_duration);
+    } else if (relative_time >= signal_duration) {
+        // Past the end of non-repeating signal
+        return voltage_values.back();
+    }
+    
+    // Calculate the index in the voltage array
+    double sample_index = relative_time * sampling_rate;
+    
+    // Handle bounds
+    if (sample_index < 0.0) return voltage_values.front();
+    if (sample_index >= voltage_values.size() - 1) return voltage_values.back();
+    
+    // Linear interpolation between samples
+    int index_floor = static_cast<int>(sample_index);
+    int index_ceil = index_floor + 1;
+    double fraction = sample_index - index_floor;
+    
+    if (index_ceil >= voltage_values.size()) {
+        return voltage_values.back();
+    }
+    
+    return voltage_values[index_floor] * (1.0 - fraction) + voltage_values[index_ceil] * fraction;
+}
+
+const std::vector<double>& WaveformVoltageSource::getVoltageValues() const { return voltage_values; }
+double WaveformVoltageSource::getSamplingRate() const { return sampling_rate; }
+double WaveformVoltageSource::getSignalDuration() const { return signal_duration; }
+double WaveformVoltageSource::getStartTime() const { return start_time; }
+bool WaveformVoltageSource::getRepeat() const { return repeat; }
+
+void WaveformVoltageSource::setVoltageValues(const std::vector<double>& values) { voltage_values = values; }
+void WaveformVoltageSource::setSamplingRate(double fs) { sampling_rate = fs; }
+void WaveformVoltageSource::setSignalDuration(double duration) { signal_duration = duration; }
+void WaveformVoltageSource::setStartTime(double start_time) { this->start_time = start_time; }
+void WaveformVoltageSource::setRepeat(bool repeat) { this->repeat = repeat; }
+
+void WaveformVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool is_transient, double currentTime) {
+    // Get the voltage at current time
+    double voltage = getVoltageAtTime(currentTime);
+    
+    // Waveform voltage source is handled like any voltage source in MNA
+    // The actual voltage constraint is handled in the solver
+    
+    // For debugging
+    static int debug_count = 0;
+    if (debug_count < 10) {
+        ErrorManager::info("[WAVEFORM] " + name + " at t=" + std::to_string(currentTime) + "s: V=" + std::to_string(voltage) + "V");
+        debug_count++;
+    }
+}
+
+// --- Phase Voltage Source Implementation ---
+PhaseVoltageSource::PhaseVoltageSource() : Element(), magnitude(1.0), base_frequency(1.0), phase(0.0) {}
+
+PhaseVoltageSource::PhaseVoltageSource(const std::string& name, const std::string& node1, const std::string& node2, 
+                                       double magnitude, double base_frequency, double phase)
+    : Element(name, node1, node2), magnitude(magnitude), base_frequency(base_frequency), phase(phase) {}
+
+std::string PhaseVoltageSource::getType() const { return "PhaseVoltageSource"; }
+double PhaseVoltageSource::getValue() const { return magnitude; }
+void PhaseVoltageSource::setValue(double value) { magnitude = value; }
+
+std::string PhaseVoltageSource::getAddCommandString() const {
+    return "VPHASE " + name + " " + node1_id + " " + node2_id + " " + 
+           std::to_string(magnitude) + " " + std::to_string(base_frequency) + " " + std::to_string(phase);
+}
+
+double PhaseVoltageSource::getVoltageAtTime(double time) const {
+    // V(t) = magnitude * cos(base_frequency * t + phase)
+    return magnitude * cos(base_frequency * time + phase);
+}
+
+double PhaseVoltageSource::getMagnitude() const { return magnitude; }
+double PhaseVoltageSource::getBaseFrequency() const { return base_frequency; }
+double PhaseVoltageSource::getPhase() const { return phase; }
+
+void PhaseVoltageSource::setMagnitude(double mag) { magnitude = mag; }
+void PhaseVoltageSource::setBaseFrequency(double freq) { base_frequency = freq; }
+void PhaseVoltageSource::setPhase(double ph) { phase = ph; }
+
+std::complex<double> PhaseVoltageSource::getComplexVoltage() const {
+    // Complex representation: V = magnitude * e^(j*phase)
+    return std::complex<double>(magnitude * cos(phase), magnitude * sin(phase));
+}
+
+void PhaseVoltageSource::contributeToMNA(Matrix& G, Vector& J, int num_nodes, const NodeIndexMap& node_map, const std::map<std::string, double>&, bool is_transient, double currentTime) {
+    // Get the voltage at current time
+    double voltage = getVoltageAtTime(currentTime);
+    
+    // Phase voltage source is handled like any voltage source in MNA
+    // The actual voltage constraint is handled in the solver
+    
+    // For debugging
+    static int debug_count = 0;
+    if (debug_count < 10) {
+        ErrorManager::info("[PHASE] " + name + " at t=" + std::to_string(currentTime) + "s: V=" + std::to_string(voltage) + "V (φ=" + std::to_string(phase) + " rad)");
+        debug_count++;
+    }
+}
+
 // --- Voltage Controlled Voltage Source (VCVS) Implementation ---
 VoltageControlledVoltageSource::VoltageControlledVoltageSource() : Element(), gain(0.0) {}
 
@@ -262,6 +541,7 @@ VoltageControlledVoltageSource::VoltageControlledVoltageSource(const std::string
 
 std::string VoltageControlledVoltageSource::getType() const { return "VoltageControlledVoltageSource"; }
 double VoltageControlledVoltageSource::getValue() const { return gain; }
+void VoltageControlledVoltageSource::setValue(double value) { gain = value; }
 std::string VoltageControlledVoltageSource::getAddCommandString() const {
     return "VCVS " + name + " " + node1_id + " " + node2_id + " " + control_node1_id + " " + control_node2_id + " " + std::to_string(gain);
 }
@@ -291,6 +571,7 @@ VoltageControlledCurrentSource::VoltageControlledCurrentSource(const std::string
 
 std::string VoltageControlledCurrentSource::getType() const { return "VoltageControlledCurrentSource"; }
 double VoltageControlledCurrentSource::getValue() const { return transconductance; }
+void VoltageControlledCurrentSource::setValue(double value) { transconductance = value; }
 std::string VoltageControlledCurrentSource::getAddCommandString() const {
     return "VCCS " + name + " " + node1_id + " " + node2_id + " " + control_node1_id + " " + control_node2_id + " " + std::to_string(transconductance);
 }
@@ -320,6 +601,7 @@ CurrentControlledCurrentSource::CurrentControlledCurrentSource(const std::string
 
 std::string CurrentControlledCurrentSource::getType() const { return "CurrentControlledCurrentSource"; }
 double CurrentControlledCurrentSource::getValue() const { return gain; }
+void CurrentControlledCurrentSource::setValue(double value) { gain = value; }
 std::string CurrentControlledCurrentSource::getAddCommandString() const {
     return "CCCS " + name + " " + node1_id + " " + node2_id + " " + controlling_branch_name + " " + std::to_string(gain);
 }
@@ -340,6 +622,7 @@ CurrentControlledVoltageSource::CurrentControlledVoltageSource(const std::string
 
 std::string CurrentControlledVoltageSource::getType() const { return "CurrentControlledVoltageSource"; }
 double CurrentControlledVoltageSource::getValue() const { return transresistance; }
+void CurrentControlledVoltageSource::setValue(double value) { transresistance = value; }
 std::string CurrentControlledVoltageSource::getAddCommandString() const {
     return "CCVS " + name + " " + node1_id + " " + node2_id + " " + controlling_branch_name + " " + std::to_string(transresistance);
 }
@@ -359,6 +642,7 @@ Diode::Diode(const std::string& name, const std::string& node1, const std::strin
     : Element(name, node1, node2), model_type(model), saturation_current(1e-12), ideality_factor(1.0), thermal_voltage(0.026) {}
 std::string Diode::getType() const { return "Diode"; }
 double Diode::getValue() const { return std::numeric_limits<double>::quiet_NaN(); }
+void Diode::setValue(double value) { /* Diodes don't have simple values */ }
 std::string Diode::getAddCommandString() const {
     return "D " + name + " " + node1_id + " " + node2_id + " " + model_type;
 }
@@ -398,6 +682,7 @@ Ground::Ground(const std::string& name, const std::string& node_id)
 
 std::string Ground::getType() const { return "Ground"; }
 double Ground::getValue() const { return 0.0; }
+void Ground::setValue(double value) { /* Ground voltage is fixed at 0V */ }
 std::string Ground::getAddCommandString() const {
     return "GND " + name + " " + node1_id;
 }
@@ -415,6 +700,7 @@ Subcircuit::Subcircuit(const std::string& name, const std::string& node1, const 
 Subcircuit::~Subcircuit() = default;
 std::string Subcircuit::getType() const { return "Subcircuit"; }
 double Subcircuit::getValue() const { return std::numeric_limits<double>::quiet_NaN(); }
+void Subcircuit::setValue(double value) { /* Subcircuits don't have simple values */ }
 std::string Subcircuit::getAddCommandString() const {
     return "SUBCKT " + name + " " + node1_id + " " + node2_id + " " + internal_port1_id + " " + internal_port2_id;
 }
@@ -433,6 +719,7 @@ WirelessVoltageSource::WirelessVoltageSource(const std::string& name, const std:
 WirelessVoltageSource::~WirelessVoltageSource() = default;
 std::string WirelessVoltageSource::getType() const { return "WirelessVoltageSource"; }
 double WirelessVoltageSource::getValue() const { return last_known_voltage; }
+void WirelessVoltageSource::setValue(double value) { last_known_voltage = value; }
 std::string WirelessVoltageSource::getAddCommandString() const {
     return "Vwireless " + name + " " + node1_id + " " + node2_id + " " + (is_server ? "SERVER" : "CLIENT") + " " + ip_address + " " + std::to_string(port);
 }
